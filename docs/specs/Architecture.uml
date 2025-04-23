@@ -1,0 +1,31 @@
+classDiagram
+    class WeatherApp {
+        +main(String[] args)
+    }
+    class WeatherService {
+        -WeatherApiClient weatherApiClient
+        +getWeather(String city) : WeatherData
+    }
+    interface WeatherApiClient {
+        +getWeatherFromApi(String city) : WeatherData
+    }
+    class OpenWeatherMapClient {
+         +getWeatherFromApi(String city) : WeatherData
+         -String apiKey
+         -String buildApiUrl(String city)
+         -WeatherData parseJsonResponse(String jsonResponse)
+    }
+    class WeatherData {
+        -String city
+        -double temperatureCelsius
+        -String description
+        +String getCity()
+        +double getTemperatureCelsius()
+        +String getDescription()
+        +String toString()
+    }
+
+    WeatherApp --> WeatherService
+    WeatherService --> WeatherApiClient : uses
+    OpenWeatherMapClient ..|> WeatherApiClient : implements
+    OpenWeatherMapClient --> WeatherData : creates
