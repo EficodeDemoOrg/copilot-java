@@ -6,17 +6,21 @@ This document provides a series of exercises designed to help you learn and prac
 
 * **Chat View:** Used for asking questions, generating code/tests/docs, and initiating actions. Modes like "Ask" (default), "Edits", and "Agent" might be selectable via a dropdown menu within the Chat view interface itself.
 * **Inline Chat:** Quick chat directly in the editor (Default: `Cmd+I` / `Ctrl+I`), often used for quick explanations or edits on selected code. Allows reviewing multiple suggestions using keyboard shortcuts (e.g., `Alt+]`/`Option+]` or check the Command Palette for "Copilot: View Next/Previous Suggestion").
-* **Participants (`@` references):** Used to bring specific, broad contexts into the chat, such as the entire workspace (`@workspace`) or the VS Code environment itself (`@vscode`).
-* **Variables (`#` references):** Used to provide more granular context to Copilot (e.g., files `#file`, selections `#selection`, symbols `#sym`, symbol usages/definitions `#usage`, changes `#changes`, codebase structure `#codebase`, web content `#fetch`, last terminal command `#terminalLastCommand`, terminal selection `#terminalSelection`).
+* **Participants (`@` references):** Used to bring specific, broad contexts into the chat, such as the entire workspace (`@workspace`) or the VS Code environment itself (`@vscode`). **Important Limitation:** You can only use **one participant** (e.g., `@workspace` OR `@vscode`) in a single chat prompt.
+* **Variables (`#` references):** Used to provide more granular context to Copilot (e.g., files `#file`, selections `#selection`, symbols `#sym`, symbol usages/definitions `#usage`, changes `#changes`, codebase structure `#codebase`, web content `#fetch`, last terminal command `#terminalLastCommand`, terminal selection `#terminalSelection`). Variables *can* be combined with a participant (e.g., `@workspace #file:SomeFile.java`).
     * **Interactive Selection:** For files, folders, symbols (`#sym`), and usage queries (`#usage`), you typically type `#` and then start typing the name; VS Code's UI will suggest matching items from your workspace for you to select easily (e.g., typing `#OpenWe` might suggest the `OpenWeatherMapClient.java` file and the `OpenWeatherMapClient` class symbol).
     * **Drag and Drop:** You can also often drag files or folders directly from the VS Code Explorer into the Chat input area to add them as context.
 * **Slash Commands:** Used within the Chat view or inline chat to direct Copilot's actions (e.g., `/explain`, `/tests`, `/fix`, `/new`).
 * **Code Completion:** Automatic suggestions as you type.
 * **Custom Instructions:** Files like `.github/copilot-instructions.md` can guide Copilot's suggestions for the workspace.
 
-**Note on `@workspace` vs `#codebase`:**
+**Note on `@workspace` vs `#codebase` and Participant Usage:**
 
-Both `@workspace` and `#codebase` aim to provide Copilot with context about your entire project. `@workspace` is commonly used for general questions about the project in the standard "Ask" mode. `#codebase` *might* be preferred or necessary for more complex tasks, especially those involving Agent mode (`/new`) or Edits mode, where a deeper analysis or generation based on the entire codebase structure is required. However, their capabilities can overlap, and the best choice might depend on the specific task, Copilot version, and observed behavior. Feel free to experiment, but these exercises will generally use `@workspace` for broad "Ask" queries and `#codebase` for Agent/Edit tasks needing workspace analysis, reflecting common patterns.
+Both `@workspace` and `#codebase` provide Copilot with context about your entire project or workspace files, serving **essentially the same core function**. However, their usage context can differ:
+* `@workspace` is the standard **participant** for general questions about the project, typically used within the default "Ask" mode of the Chat view. As a participant, it adheres to the **one-participant-per-prompt** rule.
+* `#codebase` is a **variable** that also refers to the workspace context. You might observe that `#codebase` is particularly effective or required when using specific modes like "Edits" or "Agent" (`/new`), where a deeper analysis or generation based on the entire codebase structure is required. Since it's a variable, it doesn't conflict with the one-participant rule if you needed to use `@vscode` alongside workspace context (though combining `@vscode` and `#codebase` is an uncommon scenario).
+
+These exercises generally use `@workspace` for broad "Ask" queries and `#codebase` when broad context seems needed for Agent/Edit tasks, reflecting common patterns and the potential need for `#codebase` in those specific modes. Feel free to experiment to see what works best in your specific scenario.
 
 **Prerequisites:**
 
@@ -125,7 +129,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
 ### Exercise 1.8: Asking About VS Code (`@vscode`, `/explain`)
 
 * **Purpose:** To get help with VS Code features or settings relevant to the project.
-* **Aim:** Practice using the `@vscode` participant to ask questions about the editor environment.
+* **Aim:** Practice using the `@vscode` participant to ask questions about the editor environment. Remember only one `@` participant per prompt.
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Think of a question about VS Code relevant to Java development (see examples below).
@@ -203,7 +207,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
 ### Exercise 2.1: Brainstorming Feature Ideas (`#codebase`)
 
 * **Purpose:** To generate a list of potential enhancements.
-* **Aim:** Practice using `#codebase` (or `@workspace`) for creative suggestions. (Note: `#codebase` is often effective here, potentially working better than `@workspace` if needing deeper analysis for suggestions).
+* **Aim:** Practice using `#codebase` (or `@workspace`) for creative suggestions.
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
