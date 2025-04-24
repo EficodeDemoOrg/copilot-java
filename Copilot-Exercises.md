@@ -8,7 +8,7 @@ This document provides a series of exercises designed to help you learn and prac
 * **Inline Chat:** Quick chat directly in the editor (Default: `Cmd+I` / `Ctrl+I`), often used for quick explanations or edits on selected code. Allows reviewing multiple suggestions using keyboard shortcuts (e.g., `Alt+]`/`Option+]` or check the Command Palette for "Copilot: View Next/Previous Suggestion").
 * **Participants (`@` references):** Used to bring specific, broad contexts into the chat, such as the entire workspace (`@workspace`) or the VS Code environment itself (`@vscode`).
 * **Variables (`#` references):** Used to provide more granular context to Copilot (e.g., files `#file`, selections `#selection`, symbols `#sym`, symbol usages/definitions `#usage`, changes `#changes`, codebase structure `#codebase`, web content `#fetch`, last terminal command `#terminalLastCommand`, terminal selection `#terminalSelection`).
-    * **Interactive Selection:** For files, folders, symbols (`#sym`), and usage queries (`#usage`), you typically type `#` and then start typing the name; VS Code's UI will suggest matching items from your workspace for you to select easily.
+    * **Interactive Selection:** For files, folders, symbols (`#sym`), and usage queries (`#usage`), you typically type `#` and then start typing the name; VS Code's UI will suggest matching items from your workspace for you to select easily (e.g., typing `#OpenWe` might suggest the `OpenWeatherMapClient.java` file and the `OpenWeatherMapClient` class symbol).
     * **Drag and Drop:** You can also often drag files or folders directly from the VS Code Explorer into the Chat input area to add them as context.
 * **Slash Commands:** Used within the Chat view or inline chat to direct Copilot's actions (e.g., `/explain`, `/tests`, `/fix`, `/new`).
 * **Code Completion:** Automatic suggestions as you type.
@@ -22,7 +22,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
 
 * Visual Studio Code installed.
 * GitHub Copilot and Copilot Chat extensions installed and configured.
-* The Simple Weather CLI project opened in VS Code.
+* The Simple Weather CLI project (as described in the structure diagram) opened in VS Code.
 * An integrated terminal open within VS Code (e.g., View > Terminal).
 * Basic understanding of Java and Maven.
 * An OpenWeatherMap API key set as the `OPENWEATHERMAP_API_KEY` environment variable (required for some implementation/testing steps).
@@ -66,7 +66,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type `#` and start typing `pom`. Select `pom.xml` from the suggestions.
-    3.  Append `/explain Explain the roles of the main dependencies listed here, such as Jackson, JUnit, Mockito, and any relevant Maven plugins like Surefire or Assembly.` and press Enter.
+    3.  Append `/explain Explain the roles of the main dependencies listed here, such as Jackson, JUnit, Mockito, and any relevant Maven plugins like Surefire or Assembly.` (Note: The report mentioned org.json, ensure prompt reflects actual dependencies if different) and press Enter.
     4.  Review the explanation.
 
 ### Exercise 1.4: Generating Documentation (`#selection`)
@@ -101,10 +101,13 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
 * **Aim:** Practice referencing a symbol using the `#` prefix with interactive selection.
 * **Steps:**
     1.  Open the Copilot Chat view.
-    2.  Type `#` and start typing `WorkspaceWeatherData`. Select the *symbol* `OpenWeatherMapClient#fetchWeatherData` from the suggestions (it will likely insert `#sym:...`).
-    3.  Append `/explain Explain what this method does, its parameters, and what it returns.` and press Enter.
-    4.  Try again: Type `#` start typing `WeatherData` and select the *class symbol* `WeatherData` (likely inserts `#sym:WeatherData`). Append `/explain Explain the purpose of this class and its fields.` and press Enter.
-    5.  Analyze the explanations.
+    2.  **Example 1 (Method):**
+        * Type `#` and start typing `WorkspaceWeatherData`. Select the *symbol* `OpenWeatherMapClient#fetchWeatherData` from the suggestions (it will likely insert `#sym:...`).
+        * Append `/explain Explain what this method does, its parameters, and what it returns.` and press Enter.
+    3.  **Example 2 (Class):**
+        * Type `#` start typing `WeatherData` and select the *class symbol* `WeatherData` (likely inserts `#sym:WeatherData`).
+        * Append `/explain Explain the purpose of this class and its fields.` and press Enter.
+    4.  Analyze the explanations provided for these valid symbols.
 
 ### Exercise 1.7: Fetching External Info (`#fetch`, `/explain`)
 
@@ -309,7 +312,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
     3.  Copilot should propose creating the new file (`src/main/java/com/weather/app/cache/WeatherCache.java`) and package. Review and approve.
     4.  *(Follow-up Task)* Manually integrate this `WeatherCache` into `WeatherService` (you could use "Edits" mode for this).
 
-### Exercise 3.5: Reviewing Code Changes (`#changes`, `/explain`) (Renumbered from 3.6)
+### Exercise 3.5: Reviewing Code Changes (`#changes`, `/explain`)
 
 * **Purpose:** Use Copilot to summarize pending changes.
 * **Aim:** Practice using `#changes`.
@@ -325,7 +328,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
         ```
     7.  Review Copilot's summary of your pending modifications.
 
-### Exercise 3.6: Customizing Copilot with Shared Instructions (Renumbered from 3.7)
+### Exercise 3.6: Customizing Copilot with Shared Instructions
 
 * **Purpose:** Influence Copilot generation via `.github/copilot-instructions.md`.
 * **Aim:** Define instruction, observe effect.
@@ -363,7 +366,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
         * **Verify:** Did Copilot add code to instantiate `java.util.logging.Logger`? Did it use `logger.log(Level.INFO, ...)` and `logger.log(Level.SEVERE, ..., exception)` for logging, rather than `System.out.println`?
         * If the instructions were picked up correctly, the generated code should follow the guideline specified in `copilot-instructions.md`. Apply the changes if they look correct and follow the instructions.
 
-### Exercise 3.7: Full Implementation Workflow (Ideate -> Spec -> Implement -> Refactor) (Renumbered from 3.8)
+### Exercise 3.7: Full Implementation Workflow (Ideate -> Spec -> Implement -> Refactor)
 
 * **Purpose:** To simulate a small feature development lifecycle using various Copilot capabilities sequentially.
 * **Aim:** Practice using Ask mode for ideation/spec, `#` file referencing for implementation guidance, and Edits mode for refinement.
@@ -389,7 +392,7 @@ Both `@workspace` and `#codebase` aim to provide Copilot with context about your
         * Open `WeatherApp.java` again (or the relevant display class). Use Edits mode or Ask (`# (select UnitsFeature.md) # (select WeatherApp.java) /explain Update the output display logic to show the temperature in the selected unit (C or F) and include the unit symbol.`) Apply changes.
     6.  **F. Refine (Edits):** Review the implemented code. Select sections that could be cleaner or more robust. Use Edits mode with prompts like "Refactor this temperature conversion logic for clarity" or "Add error handling if the --units argument is invalid."
 
-### Exercise 3.8: Reviewing Inline Chat Suggestions (Renumbered from 3.9)
+### Exercise 3.8: Reviewing Inline Chat Suggestions
 
 * **Purpose:** To practice exploring multiple code suggestions provided by Copilot's inline chat.
 * **Aim:** Use inline chat for a simple task and explicitly cycle through the different options Copilot offers.
