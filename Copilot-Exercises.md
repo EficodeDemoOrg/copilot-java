@@ -6,44 +6,49 @@ This document provides a series of exercises designed to help you learn and prac
 
 * **Chat View:** Used for asking questions, generating code/tests/docs, and initiating actions. Modes like "Ask" (default), "Edits", and "Agent" might be selectable via a dropdown menu within the Chat view interface itself.
 * **Inline Chat:** Quick chat directly in the editor (Default: `Cmd+I` / `Ctrl+I`), often used for quick explanations or edits on selected code.
+* **Participants (`@` references):** Used to bring specific, broad contexts into the chat, such as the entire workspace (`@workspace`), the integrated terminal (`@terminal`), or the VS Code environment itself (`@vscode`).
+* **Variables (`#` references):** Used to provide more granular context to Copilot (e.g., specific files `#file`, selections `#selection`, symbols `#sym`, changes `#changes`, problems `#problems`, codebase structure `#codebase`, web content `#fetch`).
 * **Slash Commands:** Used within the Chat view or inline chat to direct Copilot's actions (e.g., `/explain`, `/tests`, `/fix`, `/new`).
-* **Variables (`#` references):** Used to provide specific context to Copilot (e.g., `#file`, `#selection`, `#codebase`, `#folder`, `#sym`, `#changes`, `#fetch`).
 * **Code Completion:** Automatic suggestions as you type.
+* **Custom Instructions:** Files like `.github/copilot-instructions.md` can guide Copilot's suggestions for the workspace.
+
+**Note on `@workspace` vs `#codebase`:**
+
+Both `@workspace` and `#codebase` participants aim to provide Copilot with context about your entire project or workspace files. Historically, `@workspace` was commonly used. You might observe that `#codebase` is particularly effective or required when using specific modes like "Edits" or "Agent" (`/new`), while `@workspace` might function primarily in the standard "Ask" mode. While their underlying goal seems similar (providing broad project context), their availability or effectiveness might differ depending on the specific Copilot feature or mode you are using. These exercises will use `@workspace` for initial broad questions and `#codebase` where broad context is needed for generation or analysis tasks linked to specific modes, reflecting this potential distinction.
 
 **Prerequisites:**
 
 * Visual Studio Code installed.
 * GitHub Copilot and Copilot Chat extensions installed and configured.
 * The Simple Weather CLI project opened in VS Code.
+* An integrated terminal open within VS Code (e.g., View > Terminal).
 * Basic understanding of Java and Maven.
 * An OpenWeatherMap API key set as the `OPENWEATHERMAP_API_KEY` environment variable (required for some implementation/testing steps).
 
 ---
 
-## Section 1: Explore the Codebase with Copilot Chat
+## Section 1: Explore the Codebase and Environment
 
-**Goal:** Use Copilot Chat and its context awareness variables to quickly understand the existing project structure, components, logic, and external information without manually reading everything.
+**Goal:** Use Copilot Chat with various context providers (`@workspace`, `#file`, `#folder`, `#sym`, `#fetch`, `@terminal`, `@vscode`) to quickly understand the project, its dependencies, the development environment, and external information.
 
 ---
 
-### Exercise 1.1: Project Overview (`#codebase`, `/explain`)
+### Exercise 1.1: Project Overview (`@workspace`, `/explain`)
 
-* **Purpose:** To get a high-level understanding of the project's goals, main components, and structure.
-* **Aim:** Practice using the `#codebase` variable in Copilot Chat to ask broad questions about the entire project.
+* **Purpose:** To get a high-level understanding of the project's goals, main components, and structure using the broad workspace context.
+* **Aim:** Practice using the `@workspace` participant in Copilot Chat for broad project questions in "Ask" mode.
 * **Steps:**
-    1.  Open the Copilot Chat view in VS Code.
+    1.  Open the Copilot Chat view in VS Code. Ensure the mode is "Ask".
     2.  In the chat input, type the following prompt and press Enter:
         ```
-        #codebase /explain What is the main purpose of this project and how is it structured? What are the key Java classes involved according to the source code and README?
+        @workspace /explain What is the main purpose of this project and how is it structured? What are the key Java classes involved according to the source code and README?
         ```
     3.  Review Copilot's explanation.
 
----
-
 ### Exercise 1.2: Understanding a Specific Class (`#file`, `/explain`)
 
-* **Purpose:** To dive deeper into the functionality of a single, important class.
-* **Aim:** Practice using the `#file` variable combined with the `/explain` slash command.
+* **Purpose:** To dive deeper into the functionality of a single class.
+* **Aim:** Practice using the `#file` variable.
 * **Steps:**
     1.  Open the file `src/main/java/com/weather/app/OpenWeatherMapClient.java` in the editor.
     2.  Open the Copilot Chat view.
@@ -53,11 +58,9 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     4.  Analyze the response.
 
----
-
 ### Exercise 1.3: Explaining Dependencies (`#file`, `/explain`)
 
-* **Purpose:** To understand the external libraries the project relies on.
+* **Purpose:** To understand the external libraries.
 * **Aim:** Practice using `#file` with `pom.xml`.
 * **Steps:**
     1.  Open the `pom.xml` file.
@@ -67,12 +70,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     3.  Review the explanation.
 
----
-
 ### Exercise 1.4: Generating Documentation (`#selection`)
 
-* **Purpose:** To automatically generate documentation for existing code using the Chat view.
-* **Aim:** Practice using the `#selection` variable to generate Javadoc.
+* **Purpose:** To automatically generate documentation.
+* **Aim:** Practice using the `#selection` variable.
 * **Steps:**
     1.  Open the file `src/main/java/com/weather/app/WeatherService.java`.
     2.  Locate and select the entire method signature and body of the `getWeather(String city)` method.
@@ -84,11 +85,9 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     6.  Copilot should provide the Javadoc. Review it and potentially copy it into your code.
 
----
-
 ### Exercise 1.5: Explore Folder Contents (`#folder`, `/explain`)
 
-* **Purpose:** To get a summary of the code within a specific directory.
+* **Purpose:** To get a summary of the code within a directory.
 * **Aim:** Practice using the `#folder` variable.
 * **Steps:**
     1.  Open the Copilot Chat view.
@@ -98,11 +97,9 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     3.  Review Copilot's summary of the classes like `WeatherApp`, `WeatherService`, `OpenWeatherMapClient`, etc.
 
----
-
 ### Exercise 1.6: Explore a Specific Symbol (`#sym`, `/explain`)
 
-* **Purpose:** To understand a specific function or class identified by its symbol name.
+* **Purpose:** To understand a specific function or class.
 * **Aim:** Practice using the `#sym` variable.
 * **Steps:**
     1.  Open the Copilot Chat view.
@@ -116,12 +113,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     4.  Analyze the explanation provided.
 
----
-
 ### Exercise 1.7: Fetching External Info (`#fetch`, `/explain`)
 
-* **Purpose:** To pull in information from an external URL relevant to the project.
-* **Aim:** Practice using the `#fetch` variable to get context from the web.
+* **Purpose:** To pull in information from an external URL.
+* **Aim:** Practice using the `#fetch` variable.
 * **Steps:**
     1.  The README mentions the OpenWeatherMap API. Let's ask about its current weather endpoint documentation.
     2.  Open the Copilot Chat view.
@@ -130,6 +125,54 @@ This document provides a series of exercises designed to help you learn and prac
         #fetch:[https://openweathermap.org/current](https://openweathermap.org/current) /explain Based on the content from this URL, what are the main parameters needed to call the current weather data API, and what key information is typically included in the JSON response (e.g., temperature, weather description)?
         ```
     4.  Review Copilot's summary based on the fetched web page content.
+
+### Exercise 1.8: Asking About VS Code (`@vscode`, `/explain`)
+
+* **Purpose:** To get help with VS Code features or settings relevant to the project.
+* **Aim:** Practice using the `@vscode` participant to ask questions about the editor environment.
+* **Steps:**
+    1.  Open the Copilot Chat view.
+    2.  Think of a question about VS Code relevant to Java development (see examples below).
+    3.  Type your prompt using `@vscode`:
+        * Example 1: `@vscode /explain How can I see the definition of a Java method quickly without leaving my current file?`
+        * Example 2: `@vscode /explain Are there settings to automatically organize imports in Java files when I save?`
+        * Example 3: `@vscode /explain How do I configure task configurations in VS Code to run specific Maven goals for this project?`
+    4.  Review Copilot's explanation about VS Code features.
+
+### Exercise 1.9: Understanding Terminal Commands (`@terminal #lastCommand`, `/explain`)
+
+* **Purpose:** To use Copilot to explain commands executed in the integrated terminal.
+* **Aim:** Practice using the `@terminal` participant with the `#lastCommand` variable.
+* **Steps:**
+    1.  Open the integrated terminal in VS Code (View > Terminal).
+    2.  Run a command relevant to the project, for example:
+        ```bash
+        mvn clean package -DskipTests
+        ```
+    3.  Wait for the command to complete.
+    4.  Open the Copilot Chat view.
+    5.  Type the following prompt:
+        ```
+        @terminal #lastCommand /explain Explain what the last command run in the terminal does, including the purpose of any flags used (like -DskipTests).
+        ```
+    6.  Review Copilot's explanation of the Maven command.
+
+### Exercise 1.10: Explaining Terminal Output (`@terminal #selection`, `/explain`)
+
+* **Purpose:** To get clarification on specific parts of the output shown in the integrated terminal.
+* **Aim:** Practice using the `@terminal` participant with a `#selection` from the terminal buffer.
+* **Steps:**
+    1.  In the integrated terminal, run a command that produces some detailed output, for example:
+        ```bash
+        mvn --version
+        ```
+    2.  **Select a specific part** of the output in the terminal, for instance, the line showing the Java version or the Maven home directory.
+    3.  Open the Copilot Chat view.
+    4.  Type the following prompt:
+        ```
+        @terminal #selection /explain What does the selected line from the terminal output signify in the context of my development environment?
+        ```
+    5.  Review Copilot's explanation of the selected output.
 
 ---
 
@@ -142,7 +185,7 @@ This document provides a series of exercises designed to help you learn and prac
 ### Exercise 2.1: Brainstorming Feature Ideas (`#codebase`)
 
 * **Purpose:** To generate a list of potential enhancements.
-* **Aim:** Practice using `#codebase` to ask Copilot for creative suggestions.
+* **Aim:** Practice using `#codebase` for creative suggestions. (Note: `#codebase` is often effective here, potentially working better than `@workspace` if needing deeper analysis for suggestions).
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
@@ -150,8 +193,6 @@ This document provides a series of exercises designed to help you learn and prac
         #codebase Suggest 3-5 ideas for new features or significant improvements for this command-line weather application. For each idea, briefly explain the potential benefit.
         ```
     3.  Consider the suggestions.
-
----
 
 ### Exercise 2.2: Exploring an Idea (`#codebase`)
 
@@ -164,8 +205,6 @@ This document provides a series of exercises designed to help you learn and prac
         #codebase Let's explore adding a 3-day forecast option. How could we modify the application? Would we need new API calls (check OpenWeatherMap docs if needed)? How would the output look different? What classes might need changes?
         ```
     3.  Discuss the approach with Copilot.
-
----
 
 ### Exercise 2.3: Improving Error Handling (`#codebase`)
 
@@ -182,14 +221,14 @@ This document provides a series of exercises designed to help you learn and prac
 
 ## Section 3: Implement Features using Copilot
 
-**Goal:** Use Copilot's code generation capabilities (autocompletion, Edits mode, agents, slash commands) to implement changes.
+**Goal:** Use Copilot's code generation capabilities (autocompletion, Edits mode, agents, slash commands) to implement changes, using `#codebase` where broad context is needed for generation/editing modes.
 
 ---
 
 ### Exercise 3.1: Adding a New Field (Code Completion & Edits Mode)
 
-* **Purpose:** To add a simple new piece of data (e.g., humidity) and use the "Edits" mode for code modification.
-* **Aim:** Practice code completion and using the Chat view's "Edits" mode on selected code.
+* **Purpose:** Add data, use Edits mode.
+* **Aim:** Practice completion & Edits mode.
 * **Steps:**
     1.  **Modify `WeatherData.java` (Code Completion):**
         * Open the file. Add `private int humidity;`. Use completion for getter/setter (`getH`, `setH`). Add `int humidity` to the constructor and `this.humidity = humidity;` using completion.
@@ -198,7 +237,7 @@ This document provides a series of exercises designed to help you learn and prac
         * **Select the lines of code** within that block responsible for extracting values (like temperature, description) and creating the `WeatherData` instance.
         * Open the Copilot Chat view.
         * **From the dropdown menu** in the Chat input area, select the **"Edits"** mode.
-        * In the chat input, **type the instruction** (without any slash command):
+        * In the chat input, **type the instruction** (without any slash command prefix):
             ```
             Extract the 'humidity' integer value from the 'main' section of the JSON node and pass it to the WeatherData constructor along with the existing values.
             ```
@@ -206,12 +245,10 @@ This document provides a series of exercises designed to help you learn and prac
     3.  **Modify `WeatherApp.java` (Display - Code Completion):**
         * Open the file. Find the `System.out.println` statement. Modify it to include humidity, using code completion (e.g., start typing `+ ", Humidity: " + weatherData.getH`).
 
----
-
 ### Exercise 3.2: Generating Unit Tests (`#file`, `/tests`)
 
-* **Purpose:** To automatically generate unit tests.
-* **Aim:** Practice using the `/tests` slash command referencing relevant files.
+* **Purpose:** Automatically generate unit tests.
+* **Aim:** Practice `/tests` with `#file`.
 * **Steps:**
     1.  Open `src/test/java/com/weather/app/OpenWeatherMapClientTest.java`.
     2.  In the Copilot Chat view, type:
@@ -220,12 +257,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     3.  Copy the generated test method into your file, adjust imports/mocks if needed, and run tests (`mvn test`).
 
----
-
 ### Exercise 3.3: Refactoring with Edits Mode
 
-* **Purpose:** To modify existing code using natural language via the "Edits" mode.
-* **Aim:** Practice using the Chat view's "Edits" mode for refactoring selected code.
+* **Purpose:** Modify existing code via Edits mode.
+* **Aim:** Practice Edits mode for refactoring.
 * **Steps:**
     1.  *(Assumption: `ConfigUtil.java` exists with `getApiKey()` reading only the environment variable.)*
     2.  Open `src/main/java/com/weather/app/ConfigUtil.java`.
@@ -238,12 +273,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     7.  Review the proposed diff and apply the changes.
 
----
-
 ### Exercise 3.4: Creating a New Component (`#codebase`, `/new`)
 
-* **Purpose:** To use Copilot Agents to scaffold a new class structure.
-* **Aim:** Practice using the `/new` agent command (ensure Agent mode might need selecting or `/new` implies it).
+* **Purpose:** Use Copilot Agents (`/new`) to scaffold.
+* **Aim:** Practice the `/new` command with `#codebase` context (as `/new` often requires broad project understanding).
 * **Steps:**
     1.  Open the Copilot Chat view.
     2.  Type the following prompt:
@@ -259,12 +292,10 @@ This document provides a series of exercises designed to help you learn and prac
     3.  Copilot should propose creating the new file (`src/main/java/com/weather/app/cache/WeatherCache.java`) and package. Review and approve.
     4.  *(Follow-up Task)* Manually integrate this `WeatherCache` into `WeatherService` (you could use "Edits" mode for this).
 
----
-
 ### Exercise 3.5: Fixing Code (`#problems`, `/fix`)
 
-* **Purpose:** To use Copilot to fix detected problems in the code.
-* **Aim:** Practice using the `/fix` command, potentially with the `#problems` context variable.
+* **Purpose:** Use Copilot to fix detected problems.
+* **Aim:** Practice `/fix` with `#problems`.
 * **Steps:**
     1.  **Introduce a bug:** Open `src/main/java/com/weather/app/WeatherService.java`. In the `getWeather` method, intentionally introduce a typo, for example, change `WeatherData weatherData = weatherApiClient.fetchWeatherData(city);` to `WetherData weatherData = weatherApiClient.fetchWeatherData(city);` (typo in `WetherData`).
     2.  **Save the file.** VS Code's Java extension should detect this compilation error and list it in the "Problems" panel (View > Problems).
@@ -275,12 +306,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     5.  Copilot should identify the typo and suggest a fix. Review the proposed change (it might show a diff or just apply it directly depending on configuration/context) and verify the problem is resolved. Alternatively, select the line with the error and use inline chat (`Cmd+I`/`Ctrl+I`) and type `/fix`.
 
----
-
 ### Exercise 3.6: Reviewing Code Changes (`#changes`, `/explain`)
 
-* **Purpose:** To use Copilot to summarize pending source control changes.
-* **Aim:** Practice using the `#changes` variable.
+* **Purpose:** Use Copilot to summarize pending changes.
+* **Aim:** Practice using `#changes`.
 * **Steps:**
     1.  Make a few small, distinct changes to one or two files (e.g., add a comment in `WeatherApp.java`, modify the output format slightly).
     2.  **Save the files.**
@@ -293,12 +322,10 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     7.  Review Copilot's summary of your pending modifications.
 
----
-
 ### Exercise 3.7: Customizing Copilot with Shared Instructions
 
-* **Purpose:** To influence Copilot's code generation to follow project-specific guidelines using shared instructions.
-* **Aim:** Define a workspace-level instruction in `.github/copilot-instructions.md` and observe its effect when asking Copilot to add functionality (like logging).
+* **Purpose:** Influence Copilot generation via `.github/copilot-instructions.md`.
+* **Aim:** Define instruction, observe effect.
 * **Steps:**
     1.  **Create Instruction File:**
         * In the root of your project workspace, create a folder named `.github` if it doesn't already exist.
@@ -334,6 +361,7 @@ This document provides a series of exercises designed to help you learn and prac
         * If the instructions were picked up correctly, the generated code should follow the guideline specified in `copilot-instructions.md`. Apply the changes if they look correct and follow the instructions.
 
 ---
+
 ## Section 4: Optional Advanced Exercises
 
 **Goal:** Explore more nuanced or specialized applications of GitHub Copilot beyond the basic workflows. These exercises are optional and demonstrate using Copilot for tasks like debugging runtime errors, generating commit messages, performing code analysis, and exploring alternative solutions.
@@ -373,10 +401,10 @@ This document provides a series of exercises designed to help you learn and prac
 
 ---
 
-### Exercise 4.3: Code Review Assistance (Security & Performance)
+### Exercise 4.3: Code Review Assistance (Security & Performance) (`#codebase`)
 
 * **Purpose:** To use Copilot as a preliminary reviewer to identify potential areas of concern in the codebase.
-* **Aim:** Practice asking targeted questions about security and performance using the `#codebase` context.
+* **Aim:** Practice asking targeted questions about security and performance using `#codebase` (often works well for analysis requiring broad context).
 * **Steps:**
     1.  **Open Copilot Chat:** Navigate to the Copilot Chat view.
     2.  **Ask about Security:** Type the following prompt:
@@ -414,5 +442,3 @@ Beyond the workspace-level `.github/copilot-instructions.md` explored in Exercis
 These allow you to define more complex, multi-step prompts or instructions for specific, repeatable tasks (e.g., a standard refactoring pattern, generating code from a specific template, a detailed code review checklist). You can include placeholders and combine instructions with context variables. While we haven't created a specific exercise for this, it's a powerful feature to explore if you find yourself repeatedly giving Copilot the same complex instructions for common tasks within your project. You could investigate the official VS Code Copilot documentation for the latest details on creating and using these files.
 
 ---
-
-Remember to experiment with different phrasings and context variables. The goal is to integrate Copilot effectively into your development workflow.
