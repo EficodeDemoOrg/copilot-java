@@ -47,3 +47,5 @@ surefire-reports/
 *.orig
 *.rej
 *.~
+
+*.vscode

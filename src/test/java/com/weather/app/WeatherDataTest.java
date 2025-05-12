@@ -1,4 +1,4 @@
-package test.java.com.weather.app;
+package com.weather.app;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,4 +29,6 @@ public class WeatherDataTest {
         assertTrue(result.contains("20.3"));
         assertTrue(result.contains("Sunny"));
     }
+
+
 }

@@ -6,6 +6,10 @@ import org.junit.jupiter.api.AfterEach;
 import static org.junit.jupiter.api.Assertions.*;
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.StreamHandler;
 // Import main application classes correctly
 import com.weather.app.WeatherApp;
 
@@ -15,17 +19,27 @@ import com.weather.app.WeatherApp;
  */
 public class WeatherAppTest {
     
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final ByteArrayOutputStream errContent = new ByteArrayOutputStream();
+    private final ByteArrayOutputStream logContent = new ByteArrayOutputStream();
     private final PrintStream originalOut = System.out;
     private final PrintStream originalErr = System.err;
     private static boolean originalExitOnError;
     
+    private StreamHandler streamHandler;
+    private Logger appLogger;
+    
     @BeforeEach
     public void setUp() {
-        // Capture System.out and System.err for assertions
-        System.setOut(new PrintStream(outContent));
-        System.setErr(new PrintStream(errContent));
+        // Set up logger to capture log output
+        logContent.reset();
+        appLogger = Logger.getLogger("com.weather.app");
+        streamHandler = new StreamHandler(logContent, appLogger.getHandlers()[0].getFormatter());
+        streamHandler.setLevel(Level.ALL);
+        appLogger.addHandler(streamHandler);
+        appLogger.setLevel(Level.ALL);
+        
+        // We still need to capture System.out/err for any non-logger output
+        System.setOut(new PrintStream(logContent));
+        System.setErr(new PrintStream(logContent));
         
         // Disable System.exit calls during tests
         originalExitOnError = true; // Assuming default is true
@@ -34,6 +48,10 @@ public class WeatherAppTest {
     
     @AfterEach
     public void tearDown() {
+        // Remove our test handler from the logger
+        appLogger.removeHandler(streamHandler);
+        streamHandler.close();
+        
         // Restore original System.out and System.err
         System.setOut(originalOut);
         System.setErr(originalErr);
@@ -47,9 +65,12 @@ public class WeatherAppTest {
         // Call the main method with no arguments
         WeatherApp.main(new String[]{});
         
-        // Check that usage instructions are printed
-        assertTrue(errContent.toString().contains("Usage:") || 
-                  outContent.toString().contains("Usage:"));
+        // Flush the log output
+        streamHandler.flush();
+        
+        // Check that usage instructions are printed in the logs
+        String logs = logContent.toString();
+        assertTrue(logs.contains("Usage:"), "Expected usage instructions in log output");
     }
     
     // Note: The following tests would require mocking or a real API key

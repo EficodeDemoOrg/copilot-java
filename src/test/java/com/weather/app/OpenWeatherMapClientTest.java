@@ -36,7 +36,7 @@ public class OpenWeatherMapClientTest {
         mockResponse = mock(HttpResponse.class);
         
         // Create client with custom implementation
-        client = new OpenWeatherMapClient(API_KEY) {
+        client = new OpenWeatherMapClient(API_KEY, "https://test-api.example.com/weather") {
             // Custom implementation to return mock HttpClient
             protected HttpClient createHttpClient() {
                 return mockHttpClient;
@@ -143,5 +143,38 @@ public class OpenWeatherMapClientTest {
         
         // Verify that the HTTP request was sent
         verify(mockHttpClient).send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class));
+    }
+    
+    @Test
+    public void testConstructorWithEmptyApiKey() {
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+            () -> new OpenWeatherMapClient(""));
+        
+        // Verify that an appropriate error message is provided
+        assertTrue(exception.getMessage().contains("API key cannot be null or empty"));
+    }
+    
+    @Test
+    public void testConstructorWithNullApiKey() {
+        // Act & Assert
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class,
+            () -> new OpenWeatherMapClient(null));
+        
+        // Verify that an appropriate error message is provided
+        assertTrue(exception.getMessage().contains("API key cannot be null or empty"));
+    }
+    
+    @Test
+    public void testGetWeatherFromApiInvalidCityFormat() {
+        // Act & Assert - test with a city name containing invalid characters
+        WeatherApiException exception = assertThrows(WeatherApiException.class,
+            () -> client.getWeatherFromApi("London<script>alert('xss')</script>"));
+        
+        // Verify that an appropriate error message is provided
+        assertTrue(exception.getMessage().contains("Invalid city name format"));
+        
+        // Verify no HTTP request was made
+        verifyNoInteractions(mockHttpClient);
     }
 }
