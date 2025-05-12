@@ -126,6 +126,18 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         ```
     4.  Review Copilot's summary based on the fetched web page content.
 
+### Exercise 1.7.1: Correlating API Documentation with `WeatherData.java` (`#fetch`, `#file`, `/explain`)
+
+* **Purpose:** To understand how the fields in the `WeatherData.java` class correspond to the actual data provided by the OpenWeatherMap API.
+* **Aim:** Practice using `#fetch` to get API schema details and `#file` to reference a specific project file for comparison.
+* **Steps:**
+    1.  Open the Copilot Chat view.
+    2.  Type the following prompt:
+        ```
+        /explain Based on the API documentation from #fetch:https://openweathermap.org/current and the fields in #file:src/main/java/com/weather/app/WeatherData.java, which fields in our `WeatherData` class directly map to the API response? Are there any fields in `WeatherData` that are derived or not directly present in the main part of the API response (e.g., inside `main`, `wind`, `weather[]`)?
+        ```
+    3.  Review Copilot's analysis. This helps in understanding the data source for your application's core data object.
+
 ### Exercise 1.8: Asking About VS Code (`@vscode`, `/explain`)
 
 * **Purpose:** To get help with VS Code features or settings relevant to the project.
@@ -238,6 +250,19 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         #codebase Review the error handling in this application (e.g., in WeatherService, OpenWeatherMapClient, WeatherApp main method). Suggest ways to make it more robust or provide better user feedback for errors like invalid API keys, network timeouts, city not found, or unexpected API responses.
         ```
     2.  Evaluate Copilot's suggestions.
+
+### Exercise 2.4: Assessing Feature Feasibility with API Documentation (`#codebase`, `#fetch`, `/explain`)
+
+* **Purpose:** To determine if a potential new feature (e.g., displaying "feels like" temperature) is supported by the OpenWeatherMap API and how it might be accessed.
+* **Aim:** Practice using `#fetch` to consult API documentation when considering new features and `#codebase` to provide context of the current application.
+* **Steps:**
+    1.  Open the Copilot Chat view.
+    2.  Assume you are considering adding a "feels like" temperature reading to the weather output.
+    3.  Type the following prompt:
+        ```
+        #codebase I want to add a "feels like" temperature to our weather display. According to the API documentation at #fetch:https://openweathermap.org/current, is "feels like" temperature data available? If so, which field in the API response provides this, and how might I add it to the `WeatherData` class and the application\'s output?
+        ```
+    4.  Review Copilot's response to understand if the feature is feasible with the current API and get initial pointers for implementation.
 
 ---
 
@@ -431,7 +456,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
 
         [Paste the full stack trace here]
         ```
-    5.  **Analyze Suggestion:** Review Copilot's explanation of the error and the suggested fixes (e.g., adding null checks, using default values, checking path existence).
+    5.  **Analyze Suggestion:** Review Copilot's explanation of the error and the suggested fixes (e.g., adding null checks, using default values, checking path existence if applicable).
 
 ### Exercise 4.2: Commit Message Generation
 
@@ -478,13 +503,3 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
           /explain Show me an alternative way to implement the selected code's functionality (parsing JSON to a Java object). Could it be done using a different feature of the Jackson library, or perhaps using another JSON processing library if one were suitable and available (check pom.xml)? Briefly discuss any trade-offs.
           ```
     4.  **Evaluate Options:** Review the alternative implementation(s) suggested by Copilot. Consider their clarity, efficiency, and dependencies compared to the original code.
-
----
-
-### Note on Advanced Customization: Reusable Prompt Files
-
-Beyond the workspace-level `.github/copilot-instructions.md` explored in Exercise 3.6, Copilot also supports **reusable prompt files** (often with a `.prompt.md` extension, though this feature might be experimental or evolve).
-
-These allow you to define more complex, multi-step prompts or instructions for specific, repeatable tasks (e.g., a standard refactoring pattern, generating code from a specific template, a detailed code review checklist). You can include placeholders and combine instructions with context variables. While we haven't created a specific exercise for this, it's a powerful feature to explore if you find yourself repeatedly giving Copilot the same complex instructions for common tasks within your project. You could investigate the official VS Code Copilot documentation for the latest details on creating and using these files.
-
----

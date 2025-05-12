@@ -126,6 +126,18 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
         ```
     4.  Tarkastele Copilotin yhteenvetoa.
 
+### Harjoitus 1.7: API-dokumentaation ja `WeatherData.java`:n vastaavuuksien tarkastelu (`#fetch`, `#file`, `/explain`)
+
+* **Tarkoitus:** Ymmärtää, miten `WeatherData.java`-luokan kentät vastaavat OpenWeatherMap API:n tarjoamaa todellista dataa.
+* **Tavoite:** Harjoitella `#fetch`-komennon käyttöä API-skeematietojen noutamiseen ja `#file`-komennon käyttöä projektitiedoston referoimiseen vertailua varten.
+* **Vaiheet:**
+    1.  Avaa Copilot Chat -näkymä.
+    2.  Kirjoita seuraava kehotus:
+        ```
+        /explain Perustuen API-dokumentaatioon osoitteesta #fetch:https://openweathermap.org/current ja tiedoston #file:src/main/java/com/weather/app/WeatherData.java kenttiin, mitkä `WeatherData`-luokkamme kentät vastaavat suoraan API-vastauksen kenttiä? Onko `WeatherData`-luokassa kenttiä, jotka ovat johdettuja tai eivät suoraan löydy API-vastauksen pääosasta (esim. `main`, `wind`, `weather[]` sisältä)?
+        ```
+    3.  Tarkastele Copilotin analyysiä. Tämä auttaa ymmärtämään sovelluksesi ydintietolähteen.
+
 ### Harjoitus 1.8: VS Code -kysymykset (`@vscode`, `/explain`)
 
 * **Tarkoitus:** Saada apua VS Code -ominaisuuksista tai asetuksista.
@@ -238,6 +250,19 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
         #codebase Arvioi sovelluksen virheenkäsittelyä (esim. WeatherService, OpenWeatherMapClient, WeatherApp main-metodi). Ehdota tapoja tehdä siitä kestävämpää tai antaa parempaa palautetta käyttäjälle virhetilanteissa kuten virheellinen API-avain, verkkoyhteysongelmat, kaupunkia ei löydy tai odottamattomat API-vastaukset.
         ```
     2.  Arvioi ehdotukset.
+
+### Harjoitus 2.4: Ominaisuuden toteutettavuuden arviointi API-dokumentaation avulla (`#codebase`, `#fetch`, `/explain`)
+
+* **Tarkoitus:** Selvittää, tukeeko OpenWeatherMap API mahdollista uutta ominaisuutta (esim. "tuntuu kuin" -lämpötilan näyttäminen) ja miten siihen voisi päästä käsiksi.
+* **Tavoite:** Harjoitella `#fetch`-komennon käyttöä API-dokumentaation konsultointiin uusia ominaisuuksia harkittaessa ja `#codebase`-komennon käyttöä nykyisen sovelluksen kontekstin tarjoamiseen.
+* **Vaiheet:**
+    1.  Avaa Copilot Chat -näkymä.
+    2.  Oleta, että harkitset "tuntuu kuin" -lämpötilalukeman lisäämistä sääennusteeseen.
+    3.  Kirjoita seuraava kehotus:
+        ```
+        #codebase Haluan lisätä "tuntuu kuin" -lämpötilan säänäyttöömme. Onko "tuntuu kuin" -lämpötilatietoa saatavilla API-dokumentaation #fetch:https://openweathermap.org/current mukaan? Jos on, mikä API-vastauksen kenttä tarjoaa tämän tiedon, ja miten voisin lisätä sen `WeatherData`-luokkaan ja sovelluksen tulosteeseen?
+        ```
+    4.  Tarkastele Copilotin vastausta ymmärtääksesi, onko ominaisuus toteutettavissa nykyisellä API:lla, ja saadaksesi alustavia ohjeita toteutukseen.
 
 ---
 
@@ -485,5 +510,3 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
 `.github/copilot-instructions.md`-tiedoston lisäksi Copilot tukee **uudelleenkäytettäviä prompt-tiedostoja** (yleensä `.prompt.md`-päätteellä, ominaisuus voi olla kokeellinen).
 
 Näillä voi määritellä monimutkaisempia, monivaiheisia ohjeita toistuvia tehtäviä varten (esim. vakiorefaktorointi, koodigenerointi mallista, tarkistuslista katselmointiin). Voit käyttää paikkamerkkejä ja yhdistää ohjeita kontekstimuuttujiin. Vaikka tässä ei ole erillistä harjoitusta tästä, ominaisuus kannattaa tutkia, jos annat Copilotille usein samoja monimutkaisia ohjeita. Katso ajantasaiset ohjeet VS Coden Copilot-dokumentaatiosta.
-
----
