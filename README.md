@@ -6,7 +6,8 @@ A command-line application written in Java that fetches the current weather info
 
 * Fetches current weather conditions (temperature, description).
 * Accepts city name as a command-line argument.
-* Displays weather information directly in the console.
+* Displays weather information directly in the console with formatted output.
+* Provides detailed logging information for debugging and monitoring.
 * Uses Maven for dependency management and building.
 
 ## Prerequisites
@@ -65,17 +66,25 @@ Once the project is built, you can run the application from the command line usi
 1.  **Execute the JAR:**
     * Make sure you are in the project's root directory.
     * Run the application using `java -jar`, providing the city name as an argument:
-        ```bash
-        java -jar target/weather-app-1.0-SNAPSHOT-jar-with-dependencies.jar "<CityName>"
-        ```
-    * Replace `<CityName>` with the desired city (use quotes if the city name contains spaces, e.g., "New York").
+
+      ```sh
+      java -jar target/weather-app-1.0-SNAPSHOT-jar-with-dependencies.jar <city-name>
+      ```
+
+      - `<city-name>`: The name of the city for which you want to fetch weather information. Use quotes if the city name contains spaces (e.g., "New York").
 
     * **Example:**
-        ```bash
-        java -jar target/weather-app-1.0-SNAPSHOT-jar-with-dependencies.jar "London"
-        ```
+
+      ```sh
+      java -jar target/weather-app-1.0-SNAPSHOT-jar-with-dependencies.jar Helsinki
+      ```
 
     * The application will output the current weather information for the specified city or an error message if something goes wrong.
+
+    * **Note:**
+      - The application will attempt to read the OpenWeatherMap API key from the `OPENWEATHERMAP_API_KEY` environment variable or from the `src/main/resources/config.properties` file (property: `api.key`).
+      - If neither is set, the application will exit with a configuration error.
+      - The application will show detailed logging information alongside the weather output. See the **Logging** section under **Configuration** for instructions on adjusting verbosity.
 
 ## Running Tests
 
@@ -117,3 +126,19 @@ The project follows standard Maven directory layout:
 ## Configuration
 
 * **API Key:** The OpenWeatherMap API key is configured via the `OPENWEATHERMAP_API_KEY` environment variable (see Setup section).
+
+* **Logging:** The application uses Java's built-in logging framework (`java.util.logging`).
+    * Logs are displayed in the console with this format: `[timestamp] [log-level] class-name - message`
+    * Log configuration is stored in `src/main/resources/logging.properties`.
+    * To adjust logging verbosity, modify the `.level` property in `logging.properties`:
+        ```properties
+        # Set global logging level (OFF, SEVERE, WARNING, INFO, CONFIG, FINE, FINER, FINEST, ALL)
+        .level=INFO
+        ```
+    * For example, to disable all logging, change it to `.level=OFF`
+    * To see only errors, change to `.level=SEVERE`
+    * Individual class logging levels can also be configured:
+        ```properties
+        com.weather.app.WeatherService.level=WARNING
+        ```
+    * After changing logging configuration, rebuild the application with `mvn clean package`.

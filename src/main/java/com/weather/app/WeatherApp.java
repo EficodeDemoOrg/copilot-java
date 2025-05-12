@@ -63,6 +63,8 @@ public class WeatherApp {
             return;
         }
 
+
+
         // Get the city name from command line arguments
         String city = args[0];
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
@@ -78,6 +80,11 @@ public class WeatherApp {
             // Get and display weather data
             WeatherData weatherData = weatherService.getWeather(city);
             LOGGER.log(Level.INFO, weatherData.toString());
+            
+            // Display weather data to the user
+            System.out.println("Current Weather for " + city + ":");
+            System.out.println("-------------------------------------");
+            System.out.println(weatherData);
             
         } catch (ConfigUtil.ConfigException e) {
             LOGGER.log(Level.SEVERE, "Configuration error: " + e.getMessage(), e);
