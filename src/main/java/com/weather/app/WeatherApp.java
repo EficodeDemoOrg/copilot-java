@@ -79,7 +79,7 @@ public class WeatherApp {
 
             // Get and display weather data
             WeatherData weatherData = weatherService.getWeather(city);
-            LOGGER.log(Level.INFO, weatherData.toString());
+            LOGGER.log(Level.FINE, weatherData.toString());
             
             // Display weather data to the user
             System.out.println("Current Weather for " + city + ":");

@@ -113,20 +113,33 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
         * Lisää `/explain Selitä tämän luokan tarkoitus ja sen kentät.` ja paina Enter.
     4.  Analysoi selitykset.
 
-### Harjoitus 1.7: Ulkoisen tiedon hakeminen (`#fetch`, `/explain`)
+### Harjoitus 1.7: API-dokumentaation esikatselu (`#openSimpleBrowser`)
+
+* **Tarkoitus:** Tarkastella nopeasti ulkoista verkkosisältöä, kuten API-dokumentaatiota, suoraan VS Coden yksinkertaisessa selaimessa. Tämä on hyödyllistä sivun sisällön tarkistamiseen ennen `#fetch`-komennon käyttöä tai yleiseen projektiin liittyvään selailuun.
+* **Tavoite:** Harjoittele `#openSimpleBrowser`-muuttujan käyttöä URL-osoitteiden avaamiseen.
+* **Vaiheet:**
+    1.  Avaa Copilot Chat -näkymä.
+    2.  Esikatsellaksesi OpenWeatherMap API -dokumentaatiosivua suoraan VS Codessa ennen sen mahdollista käyttöä `#fetch`-komennolla, kirjoita seuraava kehotus:
+        ```
+        #openSimpleBrowser:https://openweathermap.org/current
+        ```
+    3.  Huomaa, että VS Code avaa URL-osoitteen Simple Browser -välilehdellä. Tämä mahdollistaa sivun sisällön ja rakenteen visuaalisen tarkastelun.
+    4.  Tämä ominaisuus on hyödyllinen verkkoresurssien nopeaan tarkistamiseen poistumatta editorista.
+
+### Harjoitus 1.7.1: Ulkoisen tiedon hakeminen (`#fetch`, `/explain`)
 
 * **Tarkoitus:** Hakea tietoa ulkoisesta URL-osoitteesta.
 * **Tavoite:** Harjoittele `#fetch`-muuttujan käyttöä.
 * **Vaiheet:**
     1.  README mainitsee OpenWeatherMap API:n. Kysy sen nykyisen säädatan päätepisteestä.
     2.  Avaa Copilot Chat -näkymä.
-    3.  Kirjoita:
+    3.  Kirjoita seuraava kehotus:
         ```
-        #fetch:[https://openweathermap.org/current](https://openweathermap.org/current) /explain Mitkä ovat tärkeimmät parametrit tämän API:n kutsuun ja mitä tietoja JSON-vastaus yleensä sisältää (esim. lämpötila, sääkuvaus)?
+        #fetch:[https://openweathermap.org/current](https://openweathermap.org/current) /explain Perustuen tämän URL-osoitteen sisältöön, mitkä ovat tärkeimmät parametrit nykyisen säädatan API-kutsuun ja mitä avaintietoja JSON-vastauksessa tyypillisesti on (esim. lämpötila, sään kuvaus)?
         ```
     4.  Tarkastele Copilotin yhteenvetoa.
 
-### Harjoitus 1.7: API-dokumentaation ja `WeatherData.java`:n vastaavuuksien tarkastelu (`#fetch`, `#file`, `/explain`)
+### Harjoitus 1.7.2: API-dokumentaation ja `WeatherData.java`:n vastaavuuksien tarkastelu (`#fetch`, `#file`, `/explain`)
 
 * **Tarkoitus:** Ymmärtää, miten `WeatherData.java`-luokan kentät vastaavat OpenWeatherMap API:n tarjoamaa todellista dataa.
 * **Tavoite:** Harjoitella `#fetch`-komennon käyttöä API-skeematietojen noutamiseen ja `#file`-komennon käyttöä projektitiedoston referoimiseen vertailua varten.
@@ -134,7 +147,7 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
     1.  Avaa Copilot Chat -näkymä.
     2.  Kirjoita seuraava kehotus:
         ```
-        /explain Perustuen API-dokumentaatioon osoitteesta #fetch:https://openweathermap.org/current ja tiedoston #file:src/main/java/com/weather/app/WeatherData.java kenttiin, mitkä `WeatherData`-luokkamme kentät vastaavat suoraan API-vastauksen kenttiä? Onko `WeatherData`-luokassa kenttiä, jotka ovat johdettuja tai eivät suoraan löydy API-vastauksen pääosasta (esim. `main`, `wind`, `weather[]` sisältä)?
+        /explain Perustuen API-dokumentaatioon osoitteesta #fetch:https://openweathermap.org/current ja tiedoston #file:src/main/java/com/weather/app/WeatherData.java kenttiin, mitkä `WeatherData`-luokkamme kentät vastaavat suoraan API-vastausta? Onko `WeatherData`-luokassa kenttiä, jotka ovat johdettuja tai eivät ole suoraan API-vastauksen pääosassa (esim. `main`, `wind`, `weather[]` sisällä)?
         ```
     3.  Tarkastele Copilotin analyysiä. Tämä auttaa ymmärtämään sovelluksesi ydintietolähteen.
 
@@ -207,6 +220,19 @@ Näissä harjoituksissa käytetään yleensä `@workspace` laajoihin kysymyksiin
     3.  Kirjoita `#` ja ala kirjoittaa `WeatherApiClient`. Valitse *rajapintasymboli*.
     4.  Lisää `/explain Etsi kaikki luokat, jotka toteuttavat tämän rajapinnan.` ja paina Enter.
     5.  Copilotin pitäisi tunnistaa esim. `OpenWeatherMapClient` toteutukseksi.
+
+### Harjoitus 1.13: VS Code -hakutulosten käyttäminen (`#searchResults`, `/explain`)
+
+* **Tarkoitus:** Tuoda tulokset VS Coden hakunäkymästä Copilot Chatiin yhteenvedon tekemistä, analysointia tai lisäkysymysten kontekstin tarjoamista varten.
+* **Tavoite:** Harjoittele `#searchResults`-muuttujan käyttöä.
+* **Vaiheet:**
+    1.  Suorita ensin haku VS Codessa. Avaa esimerkiksi hakunäkymä (Näytä > Haku tai `Cmd+Vaihto+F` / `Ctrl+Vaihto+F`) ja etsi termiä `WeatherData` koko projektista.
+    2.  Kun hakutulokset ovat täyttyneet hakupaneeliin, avaa Copilot Chat -näkymä.
+    3.  Kirjoita seuraava kehotus kysyäksesi Copilotilta näistä tuloksista:
+        ```
+        #searchResults /explain Tee yhteenveto näistä hakutuloksista. Mitkä tiedostot mainitsevat 'WeatherData':n ja missä yhteydessä?
+        ```
+    4.  Tarkastele Copilotin selitystä, joka perustuu tarkkoihin tiedostoihin ja riveihin, jotka näkyvät hakunäkymässäsi. Tämä auttaa ymmärtämään termin tai ominaisuuden laajuutta koodipohjassa.
 
 ---
 

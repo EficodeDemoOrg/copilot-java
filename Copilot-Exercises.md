@@ -113,7 +113,20 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         * Append `/explain Explain the purpose of this class and its fields.` and press Enter.
     4.  Analyze the explanations provided for these valid symbols.
 
-### Exercise 1.7: Fetching External Info (`#fetch`, `/explain`)
+### Exercise 1.7: Previewing API Documentation (`#openSimpleBrowser`)
+
+* **Purpose:** To quickly view external web content, such as API documentation, directly within VS Code's simple browser. This is useful for easily checking the contents of a page before using `#fetch` or for general browsing related to the project.
+* **Aim:** Practice using the `#openSimpleBrowser` variable to open URLs.
+* **Steps:**
+    1.  Open the Copilot Chat view.
+    2.  To preview the OpenWeatherMap API documentation page directly in VS Code before potentially using `#fetch` on it, type the following prompt:
+        ```
+        #openSimpleBrowser:https://openweathermap.org/current
+        ```
+    3.  Observe that VS Code opens the URL in the Simple Browser tab. This allows you to visually inspect the page content and structure.
+    4.  This feature is helpful for quick checks of web resources without leaving the editor.
+
+### Exercise 1.7.1: Fetching External Info (`#fetch`, `/explain`)
 
 * **Purpose:** To pull in information from an external URL.
 * **Aim:** Practice using the `#fetch` variable.
@@ -126,7 +139,7 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
         ```
     4.  Review Copilot's summary based on the fetched web page content.
 
-### Exercise 1.7.1: Correlating API Documentation with `WeatherData.java` (`#fetch`, `#file`, `/explain`)
+### Exercise 1.7.2: Correlating API Documentation with `WeatherData.java` (`#fetch`, `#file`, `/explain`)
 
 * **Purpose:** To understand how the fields in the `WeatherData.java` class correspond to the actual data provided by the OpenWeatherMap API.
 * **Aim:** Practice using `#fetch` to get API schema details and `#file` to reference a specific project file for comparison.
@@ -207,6 +220,19 @@ These exercises generally use `@workspace` for broad "Ask" queries and `#codebas
     3.  Type `#` and start typing `WeatherApiClient`. Select the *interface symbol* `WeatherApiClient` from the suggestions.
     4.  Append `/explain Find all classes in the workspace that implement this interface.` and press Enter.
     5.  Copilot should identify `OpenWeatherMapClient` (and potentially others if they existed) as implementations.
+
+### Exercise 1.13: Using VS Code Search Results (`#searchResults`, `/explain`)
+
+* **Purpose:** To bring the results from VS Code's Search view into Copilot Chat for summarization, analysis, or to provide context for further questions.
+* **Aim:** Practice using the `#searchResults` variable.
+* **Steps:**
+    1.  First, perform a search in VS Code. For example, open the Search view (View > Search or `Cmd+Shift+F` / `Ctrl+Shift+F`) and search for the term `WeatherData` across the project.
+    2.  Once the search results are populated in the Search panel, open the Copilot Chat view.
+    3.  Type the following prompt to ask Copilot about these results:
+        ```
+        #searchResults /explain Summarize what is found in these search results. Which files mention 'WeatherData' and in what context?
+        ```
+    4.  Review Copilot's explanation, which will be based on the exact files and lines shown in your Search view. This helps in understanding the scope of a term or feature within the codebase.
 
 ---
 
