@@ -1,0 +1,3 @@
+In the file #file:OpenWeather.md I have defined the OpenWeather API schema. This is being tested in my tests in the folder #file:test . Check if the tests for my implemented features are being covered by the tests. Pay attention to edge cases and testing differente matrices of output.
+
+Do not fix anything, but create me a test_coverage_report.md file in teh root folder. It should report what is missing, where it's missing and what are the remediating actions.
