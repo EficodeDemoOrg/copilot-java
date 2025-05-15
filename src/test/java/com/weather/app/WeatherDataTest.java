@@ -26,7 +26,7 @@ public class WeatherDataTest {
         
         // Verify that the toString method contains all the required information
         assertTrue(result.contains("Berlin"));
-        assertTrue(result.contains("20.3"));
+        assertTrue(result.contains("20,3"));
         assertTrue(result.contains("Sunny"));
     }
 

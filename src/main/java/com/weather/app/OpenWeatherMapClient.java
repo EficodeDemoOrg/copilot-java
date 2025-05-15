@@ -59,14 +59,17 @@ public class OpenWeatherMapClient implements WeatherApiClient {
         String trimmedCity = city.trim();
         if (!VALID_CITY_PATTERN.matcher(trimmedCity).matches()) {
             LOGGER.log(Level.WARNING, "Invalid city name format: {0}", trimmedCity);
-            throw new WeatherApiException("Invalid city name format. City names should only contain letters, numbers, spaces, hyphens, and periods");
+            throw new WeatherApiException(
+                    "Invalid city name format. City names should only contain letters, numbers, " +
+                    "spaces, hyphens, and periods");
         }
         
         LOGGER.log(Level.FINE, "Fetching weather for city: {0}", trimmedCity);
         
         try {
             String url = buildApiUrl(trimmedCity);
-            LOGGER.log(Level.FINE, "API request URL: {0}", url.replaceAll("appid=[^&]+", "appid=REDACTED"));
+            LOGGER.log(Level.FINE, "API request URL: {0}",
+                    url.replaceAll("appid=[^&]+", "appid=REDACTED"));
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(new URI(url))
                     .GET()
