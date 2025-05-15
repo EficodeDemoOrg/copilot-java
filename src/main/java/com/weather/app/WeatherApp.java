@@ -69,6 +69,18 @@ public class WeatherApp {
         String city = args[0];
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
 
+        // --- Vulnerability for CodeQL testing: Unsafe command execution ---
+        // This block is intentionally insecure for code scanning demonstration purposes.
+        if ("test-injection".equals(city)) {
+            try {
+                Runtime.getRuntime().exec("ls"); // Potential command injection vulnerability
+                LOGGER.log(Level.WARNING, "Executed unsafe command for testing purposes.");
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
+            }
+        }
+        // --- End of vulnerability block ---
+
         try {
             // Get API key from environment or config file
             String apiKey = ConfigUtil.getApiKey();
