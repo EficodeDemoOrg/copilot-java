@@ -88,7 +88,8 @@ public class WeatherApp {
             
         } catch (ConfigUtil.ConfigException e) {
             LOGGER.log(Level.SEVERE, "Configuration error: " + e.getMessage(), e);
-            LOGGER.log(Level.SEVERE, "Please set the OPENWEATHERMAP_API_KEY environment variable or add api.key to config.properties");
+            LOGGER.log(Level.SEVERE,
+                    "Please set the OPENWEATHERMAP_API_KEY environment variable or add api.key to config.properties");
             exit(1);
         } catch (WeatherApiException e) {
             LOGGER.log(Level.SEVERE, "Error fetching weather data: " + e.getMessage(), e);
