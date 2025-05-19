@@ -12,6 +12,12 @@ import java.util.logging.Logger;
 public class WeatherApp {
     
     private static final Logger LOGGER = Logger.getLogger(WeatherApp.class.getName());
+
+    // Secret for accessing Atlassian API!! (Not really, it's deprecated)
+    private static final String SECRET_PAT = 
+        "ATATT3xFfGF0wp8k76Z0Q2Wc2sP0NhHIlTALaCZR_CZxw8vuwsyt5Jijh-Zoem712l0jIAUjzn7hbdQ2" +
+        "vOz3dUloyFR2oFtU26VjImYu0a5opr5AoCsuiIDKfiWgxwyu_oe-IMYURIQmea5x8CPBXMhkeD9rJbPZGOy-BbrnH74s9Dap_U=4900D7F8";
+
     
     // Initialize logging configuration
     static {
@@ -27,6 +33,8 @@ public class WeatherApp {
             e.printStackTrace();
         }
     }
+
+    
     
     // Flag to control System.exit behavior (for testing)
     private static boolean exitOnError = true;
@@ -66,6 +74,19 @@ public class WeatherApp {
         // Get the city name from command line arguments
         String city = args[0];
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
+
+        // --- Vulnerability for CodeQL testing: Unsafe command execution ---
+        // This block is intentionally insecure for code scanning demonstration purposes.
+        if ("test-injection".equals(city)) {
+            try {
+                Runtime.getRuntime().exec("ls"); // Potential command injection vulnerability
+                LOGGER.log(Level.WARNING, "Executed unsafe command for testing purposes.");
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
+            }
+        }
+        // --- End of vulnerability block ---
+
 
         try {
             // Get API key from environment or config file
