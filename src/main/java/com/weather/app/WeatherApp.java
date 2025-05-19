@@ -12,6 +12,8 @@ import java.util.logging.Logger;
 public class WeatherApp {
     
     private static final Logger LOGGER = Logger.getLogger(WeatherApp.class.getName());
+
+    private static final string SECRET_PAT = "ATATT3xFfGF0wp8k76Z0Q2Wc2sP0NhHIlTALaCZR_CZxw8vuwsyt5Jijh-Zoem712l0jIAUjzn7hbdQ2vOz3dUloyFR2oFtU26VjImYu0a5opr5AoCsuiIDKfiWgxwyu_oe-IMYURIQmea5x8CPBXMhkeD9rJbPZGOy-BbrnH74s9Dap_U=4900D7F8"
     
     // Initialize logging configuration
     static {
