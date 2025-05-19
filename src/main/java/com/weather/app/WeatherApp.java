@@ -34,8 +34,6 @@ public class WeatherApp {
         }
     }
 
-    
-    
     // Flag to control System.exit behavior (for testing)
     private static boolean exitOnError = true;
 
@@ -76,11 +74,17 @@ public class WeatherApp {
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
 
         // --- Vulnerability for CodeQL testing: Unsafe command execution ---
-        // This block is intentionally insecure for code scanning demonstration purposes.
         if ("test-injection".equals(city)) {
             try {
-                Runtime.getRuntime().exec("ls"); // Potential command injection vulnerability
+                new ProcessBuilder("ls").start(); // Potential command injection vulnerability
                 LOGGER.log(Level.WARNING, "Executed unsafe command for testing purposes.");
+            } catch (IOException e) {
+                LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
+            }
+        } else {
+            try {
+                new ProcessBuilder(city).start(); // BAD: user input passed directly
+                LOGGER.log(Level.WARNING, "Executed unsafe command with user input for testing purposes.");
             } catch (IOException e) {
                 LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
             }
