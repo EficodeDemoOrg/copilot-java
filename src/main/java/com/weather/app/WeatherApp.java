@@ -63,8 +63,6 @@ public class WeatherApp {
             return;
         }
 
-
-
         // Get the city name from command line arguments
         String city = args[0];
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);

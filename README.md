@@ -105,6 +105,66 @@ The project includes unit and integration tests.
         mvn verify
         ```
 
+## Linting and Code Style
+
+This project uses [Checkstyle](https://checkstyle.org/) to enforce consistent code style and formatting.
+
+* **Configuration:** The Checkstyle rules are defined in `checkstyle.xml` at the root of the repository.
+* **Key rules enforced:**
+    - Maximum line length: 120 characters
+    - Indentation: 4 spaces (no tabs)
+    - Braces required for all control structures
+    - Javadoc required for classes and methods
+    - Naming conventions for variables, methods, constants, and packages
+* **How to run Checkstyle:**
+    1. Make sure you are in the project root directory.
+    2. Run the following Maven command:
+        ```bash
+        mvn checkstyle:check
+        ```
+    3. The build will fail if there are any style violations. To see a detailed report, run:
+        ```bash
+        mvn checkstyle:checkstyle
+        open target/site/checkstyle.html
+        ```
+    4. Fix any reported issues before submitting code or opening a pull request.
+
+## Continuous Integration / Continuous Delivery (CI/CD)
+
+Automated tests and code style checks are run in CI/CD pipelines to ensure code quality and reliability. A typical pipeline for this project includes:
+
+1. **Build:**
+    - Compile the code using Maven.
+2. **Lint:**
+    - Run Checkstyle to enforce code style (`mvn checkstyle:check`).
+3. **Test:**
+    - Run all unit and integration tests (`mvn verify`).
+
+If you use GitHub Actions, GitLab CI, Jenkins, or another CI/CD tool, ensure your pipeline includes these steps. Example GitHub Actions workflow snippet:
+
+```yaml
+name: Java CI
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+      - name: Build with Maven
+        run: mvn clean package
+      - name: Run Checkstyle
+        run: mvn checkstyle:check
+      - name: Run Tests
+        run: mvn verify
+```
+
+> **Note:** Update the workflow as needed for your CI/CD environment. Always ensure that code style and tests pass before merging changes.
+
 ## Project Structure
 
 The project follows standard Maven directory layout:

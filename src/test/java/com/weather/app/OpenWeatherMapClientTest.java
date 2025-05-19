@@ -1,4 +1,4 @@
-package test.java.com.weather.app;
+package com.weather.app;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
