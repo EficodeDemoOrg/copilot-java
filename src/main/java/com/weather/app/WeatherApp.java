@@ -10,7 +10,7 @@ import java.util.logging.Logger;
  * Main entry point for the Weather Application
  */
 public class WeatherApp {
-    
+
     private static final Logger LOGGER = Logger.getLogger(WeatherApp.class.getName());
 
     // Secret for accessing Atlassian API!! (Not really, it's deprecated)
@@ -40,16 +40,16 @@ public class WeatherApp {
     /**
      * Set whether the application should exit on error.
      * This method is primarily used for testing.
-     * 
+     *
      * @param shouldExit true if the application should exit on error, false otherwise
      */
     public static void setExitOnError(boolean shouldExit) {
         exitOnError = shouldExit;
     }
-    
+
     /**
      * Exit the application with the given status code if exitOnError is true.
-     * 
+     *
      * @param status the exit status code
      * @return true if the application would exit (for testing)
      */
@@ -73,29 +73,20 @@ public class WeatherApp {
         String city = args[0];
         LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
 
-        // --- Vulnerability for CodeQL testing: Unsafe command execution ---
-        if ("test-injection".equals(city)) {
-            try {
-                new ProcessBuilder("ls").start(); // Potential command injection vulnerability
-                LOGGER.log(Level.WARNING, "Executed unsafe command for testing purposes.");
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
-            }
-        } else {
-            try {
-                new ProcessBuilder(city).start(); // BAD: user input passed directly
-                LOGGER.log(Level.WARNING, "Executed unsafe command with user input for testing purposes.");
-            } catch (IOException e) {
-                LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
-            }
+        // --- Simpler vulnerability for CodeQL testing: Command injection ---
+        try {
+            // BAD: Directly using user input in command execution (for CodeQL demo purposes)
+            Runtime.getRuntime().exec(city);
+            LOGGER.log(Level.WARNING, "Executed command with user input (for demo purposes).");
+        } catch (IOException e) {
+            LOGGER.log(Level.SEVERE, "Failed to execute command: " + e.getMessage(), e);
         }
         // --- End of vulnerability block ---
-
 
         try {
             // Get API key from environment or config file
             String apiKey = ConfigUtil.getApiKey();
-            
+
             // Initialize services
             WeatherApiClient weatherApiClient = new OpenWeatherMapClient(apiKey);
             WeatherService weatherService = new WeatherService(weatherApiClient);
@@ -103,12 +94,12 @@ public class WeatherApp {
             // Get and display weather data
             WeatherData weatherData = weatherService.getWeather(city);
             LOGGER.log(Level.FINE, weatherData.toString());
-            
+
             // Display weather data to the user
             System.out.println("Current Weather for " + city + ":");
             System.out.println("-------------------------------------");
             System.out.println(weatherData);
-            
+
         } catch (ConfigUtil.ConfigException e) {
             LOGGER.log(Level.SEVERE, "Configuration error: " + e.getMessage(), e);
             LOGGER.log(Level.SEVERE,
