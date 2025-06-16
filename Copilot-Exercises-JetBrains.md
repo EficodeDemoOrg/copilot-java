@@ -2,6 +2,37 @@
 
 This document provides a series of exercises designed to help you learn and practice using the GitHub Copilot plugin within JetBrains IntelliJ IDEA. We will cover exploring the codebase, ideating new features, and implementing them using an advanced, Test-Driven Development (TDD) workflow.
 
+---
+## Strategies for Effective AI Interaction
+
+To get the most out of Copilot, it helps to adopt a specific mindset and a few key strategies. This is not a "magic box"; it's a tool that you, the senior developer, must guide.
+
+### Theme 1: Establish the Right Mindset (The Basics)
+
+* **Treat Copilot as a brilliant junior colleague with a poor memory.** It can write excellent code for a specific, well-defined task but lacks long-term memory of past conversations or a deep understanding of your project's high-level goals. Your role is to provide the necessary context and direction for each task.
+
+### Theme 2: Provide and Manage Context (Intermediate)
+
+Because the AI's memory is limited to the current session, you must provide context strategically.
+
+* **Use `.github/copilot-instructions.md` for Persistent Rules:** This file acts as Copilot's long-term memory for your entire project. Use it to define architectural principles, coding standards, and TDD rules that should apply to all its suggestions.
+* **Use Specification Files for Task-Specific Context:** Before implementing a feature, define it in a simple markdown file (e.g., `docs/features/SailingAdvisor.md`). Attaching this file to the chat gives the AI a clear, unambiguous goal for the duration of the task.
+* **Use `TODO.md` for State Tracking:** For complex features, ask the AI to break the plan into a `TODO.md` file. This serves as a shared checklist, allowing you and the AI to track progress without relying on chat history.
+
+### Theme 3: Troubleshoot and Steer the Conversation (Advanced)
+
+When the AI gets off track, steer it back with guiding questions instead of just correcting it.
+
+* **Ask "Why?":** If Copilot gives a suboptimal suggestion, ask it to explain its reasoning. This can reveal a misunderstanding you can then correct.
+    * **Example Prompt:** `"You suggested using System.out.println, but the project standard defined in my instructions is to use java.util.logging.Logger. Why did you make that choice?"`
+* **Ask for Help Improving Its Instructions:** Turn a correction into a learning moment for the AI's configuration. This is more effective than just stating a rule.
+    * **Example Prompt:** `"That's a good correction. Is this a rule I should add to the copilot-instructions.md file, or is there a better way to make this insight persist? Help me formulate the instruction in a way that is in line with best practices for instructing AI models."`
+* **Know When to Start a New Chat:** If Copilot becomes confused or "stuck" on a previous idea, its context may be saturated. Starting a fresh chat is often the best solution.
+* **Create a "Briefing Document" Before Switching Context:** To avoid losing progress when starting a new chat, ask the current chat to summarize its state.
+    * **Example Prompt:** `"This chat is getting long. Please summarize our progress on the Sailing Advisor feature. Include the main goal, the key decisions we made, and the immediate next step from our TODO list. Format this as a concise brief that I can use to start a new chat."`
+
+---
+
 ### Key GitHub Copilot Interaction Points in IntelliJ:
 
 * **Copilot Chat Tool Window:** Your main interface for interacting with Copilot. You can open it from the right-hand sidebar.
