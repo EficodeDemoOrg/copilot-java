@@ -1,35 +1,33 @@
 # GitHub Copilot in IntelliJ: Simple Weather CLI App Exercises
 
-This document provides a series of exercises designed to help you learn and practice using the GitHub Copilot plugin within JetBrains IntelliJ IDEA. We will cover exploring the codebase, ideating new features, and implementing them using Copilot's capabilities in the JetBrains environment.
+This document provides a series of exercises designed to help you learn and practice using the GitHub Copilot plugin within JetBrains IntelliJ IDEA. We will cover exploring the codebase, ideating new features, and implementing them using an advanced, Test-Driven Development (TDD) workflow.
 
 ### Key GitHub Copilot Interaction Points in IntelliJ:
 
-* **Copilot Chat Tool Window:** Your main interface for interacting with Copilot. You can open it from the right-hand sidebar. This is where you'll ask questions, use slash commands, and see detailed responses.
+* **Copilot Chat Tool Window:** Your main interface for interacting with Copilot. You can open it from the right-hand sidebar.
+    * **Chat Modes & Context:** The chat has different modes. The way you add file/folder context depends on the mode:
+        * **Ask Mode:** Has a `+` button to add specific file(s) as context.
+        * **Edits Mode:** Has a `+ Add Files` button to select files for modification.
+        * **Agent Mode (Preview):** Has a `+ Add Context` button that allows you to add both files and folders.
 * **Inline Chat:** Allows you to have a quick, contextual chat directly in the editor. Select a block of code and use the shortcut `Shift+Ctrl+I` (macOS) or `Shift+Ctrl+G` (Windows/Linux), or right-click and choose "Copilot > Start Inline Chat".
 * **Context Participants (`@`):** Used in the Chat window to bring specific, broad contexts into your prompt.
-    * `@project`: The equivalent of `@workspace` in VS Code. It gives Copilot context of your entire project.
-* **Chat Variables (`#`):** Used to provide more granular context from your editor to Copilot.
-    * `#file`: References one or more specific files. You can type `#file:` and start typing a filename to get suggestions.
-    * `#selection`: Automatically includes the code you have selected in the editor.
+    * `@project`: Gives Copilot context of your entire project.
 * **Slash Commands (`/`):** Quick shortcuts for common tasks used within the Chat window or Inline Chat. Common commands include `/explain`, `/tests`, `/fix`, and `/doc`.
 * **Code Completion (Ghost Text):** Automatic, inline suggestions that appear as you type. Press `Tab` to accept them.
 * **Commit Message Generation:** A dedicated Copilot icon in the Git commit window that analyzes your staged changes and suggests a commit message.
-* **Agent Mode (Preview):** A mode in the Copilot Chat window for performing more complex, multi-step tasks. This may need to be enabled in settings and is still in preview.
 
 ### Prerequisites:
 
 * JetBrains IntelliJ IDEA installed.
-* The **GitHub Copilot** plugin installed from the JetBrains Marketplace and configured with your GitHub account.
+* The **GitHub Copilot** plugin installed and configured.
 * The Simple Weather CLI project opened in IntelliJ.
-* An integrated terminal open within IntelliJ (View > Tool Windows > Terminal).
-* Basic understanding of Java and Maven.
-* An OpenWeatherMap API key set as the `OPENWEATHERMAP_API_KEY` environment variable.
+* (For later exercises) A file named `docs/APIs/OpenWeather.md` that contains information or a schema for the OpenWeatherMap API.
 
 ---
 
 ## Section 1: Explore the Codebase
 
-**Goal:** Use Copilot Chat with various context providers (`@project`, `#file`) to quickly understand the project and its components.
+**Goal:** Use Copilot Chat with various context providers to quickly understand the project and its components.
 
 ---
 
@@ -44,28 +42,30 @@ This document provides a series of exercises designed to help you learn and prac
         ```
     3.  Review Copilot's explanation.
 
-### Exercise 1.2: Understanding a Specific Class (`#file`)
+### Exercise 1.2: Understanding a Specific Class (Adding File Context)
 
 * **Purpose:** To dive deeper into the functionality of a single class.
 * **Steps:**
-    1.  Open the Copilot Chat window.
-    2.  In the chat input, type `#file:` and then start typing `OpenWeatherMapClient`. Select the correct file from the suggestions that appear.
-    3.  Append your question to the prompt:
+    1.  Open the Copilot Chat window (in "Ask" or "Edits" mode).
+    2.  Click the `+` or `+ Add Files` button.
+    3.  In the file dialog, select `src/main/java/com/weather/app/OpenWeatherMapClient.java`.
+    4.  With the file added to the context, type your question in the prompt:
         ```
-        #file:src/main/java/com/weather/app/OpenWeatherMapClient.java /explain Explain the role of this class. How does it fetch data from the API?
+        /explain Explain the role of this class. How does it fetch data from the API?
         ```
-    4.  Analyze the response.
+    5.  Analyze the response.
 
-### Exercise 1.3: Explaining Dependencies (`#file`)
+### Exercise 1.3: Explaining Dependencies (Adding File Context)
 
 * **Purpose:** To understand the project's external libraries.
 * **Steps:**
     1.  Open the Copilot Chat window.
-    2.  Use the `#file` variable to reference the `pom.xml`:
+    2.  Click the `+` button and add the `pom.xml` file to the context.
+    3.  Type your prompt:
         ```
-        #file:pom.xml /explain Explain the roles of the main dependencies listed here, such as Jackson and JUnit.
+        /explain Explain the roles of the main dependencies listed here, such as Jackson and JUnit.
         ```
-    3.  Review the explanation.
+    4.  Review the explanation.
 
 ### Exercise 1.4: Generating Documentation (`/doc`)
 
@@ -76,6 +76,19 @@ This document provides a series of exercises designed to help you learn and prac
     3.  Start an Inline Chat session (`Shift+Ctrl+I` or right-click > Copilot > Start Inline Chat).
     4.  In the inline prompt that appears, type `/doc` and press Enter.
     5.  Copilot will generate the Javadoc. Review it and click "Accept" to add it to your code.
+
+### Exercise 1.5: Explore Folder Contents (Agent Mode)
+
+* **Purpose:** To get a summary of the code within an entire directory.
+* **Steps:**
+    1.  Open the Copilot Chat window and switch to **Agent** mode.
+    2.  Click the `+ Add Context` button.
+    3.  Select the `src/main/java/com/weather/app` folder.
+    4.  With the folder added, type your prompt:
+        ```
+        Summarize the purpose of the Java classes inside the added application package.
+        ```
+    5.  Review Copilot's summary.
 
 ---
 
@@ -109,9 +122,9 @@ This document provides a series of exercises designed to help you learn and prac
 
 ---
 
-## Section 3: Implement Features using Copilot
+## Section 3: Implement and Test Features
 
-**Goal:** Use Copilot's code generation capabilities to implement changes efficiently.
+**Goal:** Use Copilot's code generation capabilities to implement changes and improve test coverage efficiently.
 
 ---
 
@@ -133,7 +146,7 @@ This document provides a series of exercises designed to help you learn and prac
 * **Steps:**
     1.  Open `src/main/java/com/weather/app/OpenWeatherMapClient.java`.
     2.  Select the entire class content.
-    3.  Open the Copilot Chat window. With the code selected, the chat will use it as context.
+    3.  Open the Copilot Chat window. With the code selected, the chat will automatically use it as context.
     4.  Type the prompt:
         ```
         /tests Generate a new JUnit test method for OpenWeatherMapClient. It should mock the HTTP call and a sample JSON response, then verify that fetchWeatherData correctly parses the data.
@@ -144,9 +157,8 @@ This document provides a series of exercises designed to help you learn and prac
 
 * **Purpose:** Use Copilot's Agent Mode to scaffold a new class from a detailed prompt.
 * **Steps:**
-    1.  Open the Copilot Chat window.
-    2.  From the dropdown menu in the chat input area, select **Agent (Preview)** mode.
-    3.  Type the following prompt:
+    1.  Open the Copilot Chat window and switch to **Agent (Preview)** mode.
+    2.  Type the following prompt:
         ```
         Create a new Java class named 'WeatherCache' in a new package 'com.weather.app.cache'. This class should have:
         1. A private static final ConcurrentHashMap<String, CacheEntry> for storage.
@@ -156,36 +168,198 @@ This document provides a series of exercises designed to help you learn and prac
         5. A public static method `get(String city)` that returns an Optional<WeatherData> and checks for non-expired entries.
         Include Javadoc.
         ```
-    4.  Copilot will analyze the request, propose a plan, and create the new file and package. Review and approve the changes.
+    3.  Copilot will analyze the request, propose a plan, and create the new file and package. Review and approve the changes.
 
-### Exercise 3.4: Generating Commit Messages
+### Exercise 3.4: Generating and Customizing Commit Messages
 
-* **Purpose:** To leverage Copilot for drafting standardized Git commit messages.
-* **Steps:**
+* **Purpose:** To leverage Copilot for drafting standardized Git commit messages and customize its behavior.
+* **Part A: Generating a Message**
     1.  Make sure you have uncommitted changes from the previous exercises.
     2.  Open the **Commit** tool window in IntelliJ (View > Tool Windows > Commit).
     3.  Stage your changed files.
     4.  In the Commit tool window, locate and click the **Ask Copilot to Generate Commit Message** icon (it looks like the Copilot logo).
-    5.  Review the generated commit message. You can use it as a starting point for your actual commit.
+    5.  Review the generated commit message.
+* **Part B: Customizing the Format**
+    1.  Navigate to your IDE's settings: `File > Settings...` (or `IntelliJ IDEA > Settings...` on macOS).
+    2.  Go to `Languages & Frameworks > GitHub Copilot`.
+    3.  Find the text area for **Git Commit Instructions**.
+    4.  Enter a custom instruction to enforce a specific format. For example, for Conventional Commits, type:
+        ```
+        Generate commit messages following the Conventional Commits specification. The format must be `<type>(<scope>): <subject>`. For example: `feat(api): add humidity field to weather data`.
+        ```
+    5.  Click **Apply** or **OK**.
+    6.  Go back to the Commit window and click the Generate Commit Message icon again. Observe how the new message adheres to your custom format.
 
-### Exercise 3.5: Customizing Copilot with Instructions
+### Exercise 3.5: Analyzing Test Coverage (Agent Mode)
 
-* **Purpose:** To influence Copilot's suggestions for the entire project by creating an instructions file.
+* **Purpose:** To use Copilot as a QA engineer to analyze the quality and completeness of existing tests.
 * **Steps:**
-    1.  **Create Instruction File:**
-        * In the root of your project, create a folder named `.github` if it doesn't exist.
-        * Inside `.github`, create a new file named `copilot-instructions.md`.
-    2.  **Define Instruction:**
-        * Open `copilot-instructions.md` and add the following content:
-            ```markdown
-            # Copilot Instructions for Simple Weather CLI
+    1.  Switch the Copilot Chat to **Agent** mode.
+    2.  Click `+ Add Context` and add the entire `src/test` folder.
+    3.  Provide a detailed prompt asking for analysis:
+        ```
+        I need you to act as a Quality Assurance engineer. Please analyze the test classes in the attached `src/test` folder. Your goal is to assess the quality and coverage of our existing JUnit tests.
 
-            - For application logging, always use `java.util.logging.Logger`.
-            - Avoid using `System.out.println` for logging inside methods.
-            - When catching exceptions, log them at the `SEVERE` level.
-            ```
-    3.  **Apply Instruction:**
-        * Open `src/main/java/com/weather/app/WeatherService.java`.
-        * Select the `getWeather` method.
-        * Start an Inline Chat and type: `/fix Add logging to this method for the start of the call and for any exceptions.`
-    4.  **Observe Result:** Review the proposed changes. Verify that Copilot used `java.util.logging.Logger` as specified in your instructions file. The `.github/copilot-instructions.md` file provides persistent context for all of Copilot's actions in the repository.
+        First, provide a high-level summary of what each test class seems to be covering. Then, identify any obvious gaps in our testing strategy. For example, are there public methods in the main application code that have no corresponding tests? Are we only testing the "happy path" and ignoring potential error conditions like network failures or invalid user input? Provide your analysis in a clear, structured format with specific recommendations for improvement.
+        ```
+    4.  Review Copilot's assessment to identify weak spots in your test suite.
+
+### Exercise 3.6: Generating Edge Case Tests from a Schema
+
+* **Purpose:** To explicitly use an API schema to generate tests for potential failure modes and edge cases.
+* **Steps:**
+    1.  Open the Copilot Chat window.
+    2.  Add the following files to the context: `WeatherService.java`, `WeatherServiceTest.java`, and `docs/APIs/OpenWeather.md`.
+    3.  Provide a prompt that forces Copilot to use the schema:
+        ```
+        Your task is to act as a QA engineer and design edge case tests for our `WeatherService`. **You must strictly use the attached `OpenWeather.md` API schema** to inform your suggestions. Look at the data types, required fields, and array structures in the schema.
+
+        Based on that schema, what happens if:
+        - The API returns a 404 "Not Found" error?
+        - The API returns a valid response but a required field like `main` is missing?
+        - The API returns a `temp` value that is not a number, contradicting the schema?
+
+        Now, for the "Malformed JSON" scenario, generate a complete JUnit 5 test method. The mock response string in the test must be a deliberately broken version of the JSON structure described in the schema.
+        ```
+    4.  Incorporate the generated test into your `WeatherServiceTest.java` file.
+
+### Exercise 3.7: Generating Mock Test Data from a Schema
+
+* **Purpose:** To quickly create realistic, schema-compliant mock data for use in multiple unit tests.
+* **Steps:**
+    1.  Open the Copilot Chat in **Ask Mode**.
+    2.  Click the `+` button and add the `docs/APIs/OpenWeather.md` file to the context.
+    3.  Provide a prompt requesting varied mock data:
+        ```
+        I need to create mock data for my unit tests. Using the attached `OpenWeather.md` API schema as a strict reference, please generate three distinct Java strings representing valid JSON responses.
+
+        - The first string should be a 'perfect' response with all fields populated with realistic data for a temperate climate.
+        - The second string should represent a response for a city in a very cold climate (e.g., negative temperature, high wind).
+        - The third string should represent a response where an optional field, like `wind.gust`, is not present.
+        ```
+    4.  Copy the generated JSON strings. You can now use them in your test files with Mockito (e.g., `when(mockClient.fetchRawData(anyString())).thenReturn(mockJsonString);`).
+
+---
+
+## Section 4: TDD Feature Implementation Workflow
+
+**Goal:** Simulate a complete feature development lifecycle from ideation to implementation using a Test-Driven Development (TDD) approach. This section provides two paths: **Path A** for users with access to Copilot's **Agent Mode**, and **Path B** for users relying on **Ask and Edits Modes**.
+
+### Step 4.1: Setup - Customizing Copilot Instructions
+
+Before starting, it's crucial to guide Copilot's behavior for your project.
+
+1.  **Create Instruction File:**
+    * In the root of your project, create a folder named `.github` if it doesn't exist.
+    * Inside `.github`, create a new file named `copilot-instructions.md`.
+2.  **Define Instructions:**
+    * Open `copilot-instructions.md` and add guidelines that are important for your project. For example:
+        ```markdown
+        # Copilot Instructions for Simple Weather CLI
+
+        1.  All new features must be implemented following a TDD approach. Tests should always be written before the implementation code.
+        2.  For logging, always instantiate and use `java.util.logging.Logger`. Avoid `System.out.println`.
+        3.  Unit tests must use JUnit 5 and Mockito for mocking dependencies.
+        4.  When generating code, ensure it is well-documented with Javadoc.
+        ```
+3.  **Troubleshooting Tip:** If Copilot repeatedly provides suggestions that contradict your project's standards, ask it directly: *"Why do you keep suggesting X when my project uses Y?"* Use its answer to refine your `copilot-instructions.md` file for better results.
+
+### Step 4.2: Ideation & Exploration (Ask Mode)
+
+Let's brainstorm a new feature based on potential user needs.
+
+1.  Open the Copilot Chat window in **Ask Mode**.
+2.  Click the `+` button and add your `docs/APIs/OpenWeather.md` file to the context.
+3.  Type the following prompt:
+    ```
+    @project I want to add a feature to advise users on outdoor activities. A user might want to know if it's a good day for sailing or fishing. Considering the attached API schema, what data points like wind speed or cloud cover would be most useful? Suggest one concrete feature based on this data.
+    ```
+4.  Review Copilot's suggestion. For this exercise, let's assume it suggests a "Sailing Advisor" feature based on wind speed.
+
+### Step 4.3: Feature Definition (User Story)
+
+Distill the chosen idea into a clear, non-technical user story.
+
+1.  Create a new file at `docs/features/SailingAdvisor.md`.
+2.  Write the user story inside:
+    ```markdown
+    **Feature: Sailing Advisor**
+
+    **As a user**, I want to know if it's a good day for sailing based on the current weather.
+    **So that**, I can make plans safely and avoid dangerous conditions.
+
+    **Acceptance Criteria:**
+    * The app must fetch and display the current wind speed in km/h.
+    * The app must provide a simple recommendation: "Good day for sailing" or "Not recommended for sailing" based on the wind speed.
+    ```
+
+### Step 4.4: Planning the Implementation (TDD Approach)
+
+This is where the workflow splits based on whether you have Agent Mode.
+
+* #### Path A: Using Agent Mode
+
+    1.  Switch the Copilot Chat to **Agent (Preview)** mode.
+    2.  Click `+ Add Context` and add the `docs/features/SailingAdvisor.md` file.
+    3.  Provide the following prompt:
+        ```
+        I want to implement the feature described in the attached file using a TDD approach. Your first task is to create a detailed implementation plan. Assess the existing code and tests, then create a plan that outlines the **new tests we need to write first**, followed by the implementation changes. The plan should cover data models, services, and the main application output. Write this plan to a new file named `docs/plans/SailingAdvisor_Plan.md`.
+        ```
+    4.  The Agent will create the plan file. Review it for the next step.
+
+* #### Path B: Using Ask Mode
+
+    1.  Stay in **Ask Mode**.
+    2.  Click the `+` button and add the following files to your prompt's context:
+        * `docs/features/SailingAdvisor.md`
+        * `src/main/java/com/weather/app/OpenWeatherMapClient.java`
+        * `src/main/java/com/weather/app/WeatherService.java`
+        * `src/test/java/com/weather/app/WeatherServiceTest.java`
+    3.  Provide the following prompt:
+        ```
+        Based on the attached user story and source files, create a detailed implementation plan for this feature using a TDD approach. The plan must first outline the new unit tests required, and then the code changes needed to make those tests pass.
+        ```
+    4.  Copilot will generate the plan in the chat. Copy this plan and manually create a new file, `docs/plans/SailingAdvisor_Plan.md`, and paste the content.
+
+### Step 4.5: Creating an Incremental TODO List
+
+Break the high-level plan into small, actionable steps.
+
+* #### Path A: Using Agent Mode
+
+    1.  In the same Agent chat, provide a follow-up prompt:
+        ```
+        Based on the `SailingAdvisor_Plan.md` you just created, break it down into an incremental TODO list with simple, actionable steps. Each step should be small enough for a single Git commit. Write this list to a new file named `TODO.md`.
+        ```
+
+* #### Path B: Using Ask Mode
+
+    1.  In a new chat, click `+` and add the `docs/plans/SailingAdvisor_Plan.md` file you created.
+    2.  Provide the following prompt:
+        ```
+        Based on the attached implementation plan, create a simple, incremental TODO list in a new file named `TODO.md`. Each step should be a small, logical change suitable for a single commit.
+        ```
+    3.  Manually create the `TODO.md` file and paste the generated list.
+
+### Step 4.6: Step-by-Step Implementation (The TDD Flow)
+
+Now, execute the plan from your `TODO.md` file. The core loop is: **Write a failing test -> Write code to make it pass -> Refactor**.
+
+1.  **Pick the First Task:** Look at the first item in `TODO.md`. It will likely be something like: "1. Add `windSpeed` field to `WeatherData` class." The TDD equivalent is testing this new field.
+
+2.  **Write the Failing Test First:**
+    * **Path A (Agent):** You can instruct the agent: `Implement step 1 from the TODO.md. Start by modifying WeatherDataTest.java to include a test for the new windSpeed field. This test should fail initially.`
+    * **Path B (Inline Chat):** Open `WeatherDataTest.java`. Select a relevant area, start an Inline Chat, and type: `/tests Add a new test to verify that a windSpeed field can be set and retrieved on the WeatherData object.` Run the test; it should fail because the field and methods don't exist.
+    * **Pro Tip: Consider Edge Cases.** When writing tests for the new feature, don't just test the "happy path." Use what you learned in Exercises 3.6 and 3.7. Ask Copilot to help you write tests for potential edge cases related to your new feature. For the Sailing Advisor, this could mean testing what happens if the wind speed is missing from the API response, is exactly on the boundary of your recommendation threshold, or is an invalid value.
+
+3.  **Write Code to Pass the Test:**
+    * **Path A (Agent):** The agent should automatically proceed to modify `WeatherData.java` to make the test pass after you approve the test creation.
+    * **Path B (Inline Chat):** Open `WeatherData.java`. Use code completion or an inline prompt (`/fix Add the necessary field and methods to satisfy the failing test in WeatherDataTest.java`) to add the `windSpeed` field and its getter/setter. Run the tests again; they should now pass.
+
+4.  **Commit Your Changes:**
+    * You have completed a full TDD cycle for one small step.
+    * Open the **Commit** tool window. Stage your changes.
+    * Click the **Ask Copilot to Generate Commit Message** icon.
+    * Approve or edit the message (e.g., `feat: Add windSpeed to WeatherData model and tests`) and commit.
+
+5.  **Repeat for All TODOs:** Continue this process for every item in your `TODO.md`. For more complex steps like modifying service logic, the loop remains the same: add a failing test to the service test class first, then implement the service logic to make it pass.

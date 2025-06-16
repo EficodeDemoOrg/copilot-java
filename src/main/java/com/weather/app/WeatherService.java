@@ -23,7 +23,7 @@ public class WeatherService {
      */
     public WeatherData getWeather(String city) throws WeatherApiException {
         LOGGER.log(Level.INFO, "Getting weather data for city: {0}", city);
-        
+
         if (city == null || city.trim().isEmpty()) {
             LOGGER.log(Level.WARNING, "City name cannot be empty");
             throw new WeatherApiException("City name cannot be empty");
@@ -31,7 +31,7 @@ public class WeatherService {
         
         try {
             WeatherData weatherData = weatherApiClient.getWeatherFromApi(city);
-            LOGGER.log(Level.INFO, "Successfully retrieved weather data. Temperature: {0}°C", 
+            LOGGER.log(Level.INFO, "Successfully retrieved weather data. Temperature: {0}°C",
                     weatherData.getTemperatureCelsius());
             return weatherData;
         } catch (WeatherApiException e) {
@@ -40,3 +40,4 @@ public class WeatherService {
         }
     }
 }
+
