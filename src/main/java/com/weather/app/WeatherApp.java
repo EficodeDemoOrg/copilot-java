@@ -1,7 +1,9 @@
 package com.weather.app;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
@@ -54,18 +56,53 @@ public class WeatherApp {
         return true;
     }
 
+    /**
+     * Load ASCII art from a resource file
+     *
+     * @param filename the name of the art file to load
+     * @return the ASCII art as a string, or empty string if not found
+     */
+    private static String loadAsciiArt(String filename) {
+        StringBuilder art = new StringBuilder();
+        try (InputStream is = WeatherApp.class.getClassLoader().getResourceAsStream("art/" + filename);
+             BufferedReader reader = new BufferedReader(new InputStreamReader(is))) {
+            
+            String line;
+            while ((line = reader.readLine()) != null) {
+                art.append(line).append(System.lineSeparator());
+            }
+        } catch (IOException | NullPointerException e) {
+            LOGGER.log(Level.FINE, "Could not load ASCII art file: " + filename, e);
+        }
+        return art.toString();
+    }
+
+    /**
+     * Display weather data with ASCII sun art
+     *
+     * @param weatherData the weather data to display
+     */
+    private static void displayWeatherWithArt(WeatherData weatherData) {
+        System.out.println();
+        System.out.println(loadAsciiArt("sun.txt"));
+        System.out.println("Current Weather for " + weatherData.getCity() + ":");
+        System.out.println("========================================");
+        System.out.println(weatherData);
+        System.out.println();
+    }
+
     public static void main(String[] args) {
         // Validate command line arguments
         if (args.length < 1) {
-            LOGGER.log(Level.INFO, "Usage: java -jar WeatherApp.jar <city-name>");
-            LOGGER.log(Level.INFO, "Example: java -jar WeatherApp.jar London");
+            System.out.println("Usage: java -jar WeatherApp.jar <city-name>");
+            System.out.println("Example: java -jar WeatherApp.jar London");
             exit(1);
             return;
         }
 
         // Get the city name from command line arguments
         String city = args[0];
-        LOGGER.log(Level.INFO, "Weather request for city: {0}", city);
+        LOGGER.log(Level.FINE, "Weather request for city: {0}", city);
 
         try {
             // Get API key from environment or config file
@@ -79,10 +116,8 @@ public class WeatherApp {
             WeatherData weatherData = weatherService.getWeather(city);
             LOGGER.log(Level.FINE, weatherData.toString());
 
-            // Display weather data to the user
-            System.out.println("Current Weather for " + city + ":");
-            System.out.println("-------------------------------------");
-            System.out.println(weatherData);
+            // Display weather data to the user with ASCII art
+            displayWeatherWithArt(weatherData);
 
         } catch (ConfigUtil.ConfigException e) {
             LOGGER.log(Level.SEVERE, "Configuration error: " + e.getMessage(), e);
