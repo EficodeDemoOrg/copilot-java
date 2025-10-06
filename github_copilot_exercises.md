@@ -97,6 +97,11 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Request: "Add input validation to this method"
    - Observe how Edit mode focuses on direct code changes
 
+   > - Alternatively if #selection is not supported in your IDE:
+   >   - Switch to edit mode
+   >   - Provide file as context
+   >   - Prompt: "Add input validation to the setStatus method in Task.php"
+
 3. **Agent Mode with /new**
    - Type: `/new Create a simple Java utility class for temperature conversion`
    - Notice how Agent mode creates complete new implementations
