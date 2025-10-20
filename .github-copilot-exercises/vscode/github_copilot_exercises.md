@@ -38,7 +38,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Position your cursor after a method and press Enter
    - Type `// Method to check if weather data is stale` and press Enter
    - Watch Copilot suggest a method implementation
-   - Try accepting the suggestion with `Tab`, or cycle through alternatives with `Alt+]` and `Alt+[`
+   - Try accepting the suggestion with `Tab`
 
 2. **Practice with Comments**
    - Add this comment: `// Convert temperature from Kelvin to Celsius`
@@ -58,6 +58,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Add a comment: `// Validate API key format`
    - Hover mouse over the suggestion to see alternative suggestions
    - Press `tab` to accept a suggestion
+   - If no suggestions appear, try different comments or method names
 
 2. **Partial Acceptance**
    - Start typing a method and accept only part of a suggestion using `Ctrl+→` or `Cmd+→`

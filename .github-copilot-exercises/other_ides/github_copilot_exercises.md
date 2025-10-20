@@ -48,6 +48,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Add a comment: `// Validate API key format`
    - Hover mouse over the suggestion to see alternative suggestions
    - Press `tab` to accept a suggestion
+   - If no suggestions appear, try different comments or method names
 
 2. **Partial Acceptance**
    - Start typing a method and accept only part of a suggestion using `Ctrl+→` or `Cmd+→`
