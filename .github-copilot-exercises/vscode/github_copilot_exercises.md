@@ -1,21 +1,21 @@
 # GitHub Copilot Comprehensive Training Exercises
 
-Welcome to your comprehensive GitHub Copilot training journey! These exercises are designed to progressively learn GitHub Copilot's features starting with foundational concepts and building up to advanced techniques through hands-on practice with our Java weather CLI project.
+Welcome to your comprehensive GitHub Copilot training journey! These exercises are designed to progressively learn GitHub Copilot's features starting with foundational concepts and building up to advanced techniques through hands-on practice with our Java weather CLI application.
 
 ## Phase 1: Getting Started with Copilot Basics
 
 ### Exercise 1.1: Understanding Your Project with Chat Participants
 
-**Welcome to the project!** Before diving into code generation, let's use GitHub Copilot to understand the project you'll be working with.
+**Welcome to the Weather CLI project!** Before diving into code generation, let's use GitHub Copilot to understand the project you'll be working with.
 
 1. **@workspace Participant - Project Overview**
    - Press `Ctrl+Shift+I` (or `Cmd+Shift+I`) to open Copilot Chat and select "Ask" mode
    - Ask: `@workspace Tell me about this project?`
    - Try: `@workspace /explain Give me a comprehensive overview of this weather CLI application`
-   - Request: `@workspace What are the main features and components I should know about?`
+   - Request: `@workspace What are the main features and components of this weather CLI tool?`
 
 2. **@workspace Participant - Code Structure**
-   - Ask: `@workspace How are the files and folders organized in this Maven project?`
+   - Ask: `@workspace How are the Java packages and classes organized in this project?`
    - Try: `@workspace Show me all the validation patterns used`
    - Request: `@workspace How are dependencies managed across the codebase?`
 
@@ -27,7 +27,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 4. **@terminal Participant - Running the Project**
    - Ask: `@terminal What's the best way to compile and run this Java weather application?`
    - Try: `@terminal Show me common Maven commands for this project`
-   - Request: `@terminal How do I run tests from command line using Maven?`
+   - Request: `@terminal How do I run tests from command line?`
 
 **Learning Goal:** Use different chat participants to get familiar with the project structure, setup, and workflow before starting development.
 
@@ -36,7 +36,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 1. **Explore Auto-Suggestions**
    - Open `src/main/java/com/weather/app/WeatherData.java`
    - Position your cursor after a method and press Enter
-   - Type `// Method to check if weather data is stale` and press Enter
+   - Type `// Method to check if weather data is recent` and press Enter
    - Watch Copilot suggest a method implementation
    - Try accepting the suggestion with `Tab`
 
@@ -47,7 +47,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 3. **Experiment with Method Names**
    - Start typing `public String formatTemperature` and see what Copilot suggests
-   - Try `public boolean isValidData` and observe the different suggestion
+   - Try `public boolean isWeatherDataValid` and observe the different suggestion
 
 **Learning Goal:** Understand how Copilot uses context and comments to generate relevant code suggestions.
 
@@ -75,7 +75,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Ask: "Explain what this file does"
 
 2. **Basic Chat Questions**
-   - Ask: "What are the main components of this weather application?"
+   - Ask: "What are the main components of this weather CLI application?"
    - Try: "How is the OpenWeatherMap API integration handled in this project?"
    - Notice how Copilot provides explanations and guidance
 
@@ -85,7 +85,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 1. **Ask Mode Practice**
    - In Copilot Chat, ask questions about code without expecting changes
-   - Try: "What design patterns are used in this Java codebase?"
+   - Try: "What design patterns are used in this codebase?"
    - Notice how Ask mode provides explanations and guidance
 
 2. **Edit Mode Exploration**  
@@ -115,7 +115,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Open the newly created `.github/copilot-instructions.md` file
    - Read through the generated content to understand what Copilot discovered about your project
    - Notice how it identifies:
-     - Java project structure and Maven configuration
+     - Project structure and Maven configuration
      - Key conventions and coding styles
      - Important file structures and relationships
      - Development workflows and Maven commands
@@ -145,9 +145,9 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 2.1: Basic Slash Commands
 
 1. **Understanding Code with `/explain`**
-   - Select the `getWeatherData()` method in `src/main/java/com/weather/app/WeatherService.java`
+   - Select the `getWeather()` method in `src/main/java/com/weather/app/WeatherService.java`
    - Type: `/explain #selection`
-   - Try: `/explain How do the weather service and client classes interact?`
+   - Try: `/explain How do data models interact with services in this application?`
    - Compare explanations with different context levels
 
 2. **Code Documentation with `/doc`**
@@ -156,16 +156,16 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Try: `/doc Generate comprehensive Javadoc documentation for this class`
 
 3. **Quick Fixes with `/fix`**
-   - Create intentional issues (missing import, wrong variable type)
+   - Create intentional issues (missing semicolon, wrong variable type, missing import)
    - Use: `/fix` to address the issues
-   - Try: `/fix Address all checkstyle violations in this file`
+   - Try: `/fix Address all checkstyle violations w.r.t Java coding standards in this file`
 
 **Learning Goal:** Master basic slash commands for common development tasks.
 
 ### Exercise 2.2: Creative Generation with `/new`
 
 1. **Simple Utility Creation**
-   - Try: `/new Create a temperature conversion utility class for this project`
+   - Try: `/new Create a temperature conversion utility class for this Java project`
    - Experiment: `/new Generate a configuration manager that fits this Java architecture`
    - Advanced: `/new Create a caching system for weather API responses`
 
@@ -174,21 +174,21 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 ### Exercise 2.3: Creating Project Structure with `/new`
 
 1. **Package and Class Structure Creation**
-   - Try: `/new Create a new package structure for weather data processors with multiple implementation classes`
-   - Experiment: `/new Generate a utilities package with helper classes for data conversion`
-   - Advanced: `/new Create a complete caching system with interfaces and implementations`
+   - Try: `/new Create a new package structure for weather data processors with multiple implementation classes.`
+   - Experiment: `/new Generate a utilities package with helper classes for data conversion.`
+   - Advanced: `/new Create a complete caching system with interfaces and implementations.`
 
-2. **Multi-file Component Generation**
+2. **Multi-class Component Generation**
    - Request: `/new Create a weather forecast module with model, service, and client classes`
    - Try: `/new Generate a notification system with different output formatters (console, file, email)`
 
-**Learning Goal:** Learn to use `/new` for generating complete package structures and multi-file components.
+**Learning Goal:** Learn to use `/new` for generating complete folder structures and multi-file components.
 
 ### Exercise 2.4: Generating Tests with `/tests`
 
 1. **Unit Test Generation**
    - Open `src/main/java/com/weather/app/WeatherData.java`
-   - Select a getter method or constructor
+   - Select a getter or constructor method
    - In chat: `/tests #selection`
    - Examine the generated JUnit test structure
 
@@ -230,7 +230,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Request: `Show me the data flow in #codebase`
 
 4. **Advanced Variable Combinations**
-   - Try: `@workspace #codebase What would be the impact of adding weather caching?`
+   - Try: `@workspace #codebase What would be the impact of adding weather data caching?`
    - Experiment: `#file #selection How does this relate to the overall Maven project architecture?`
 
 **Learning Goal:** Master chat variables for precise context control and analysis.
@@ -263,7 +263,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
    - Open Copilot Chat in Ask mode
    - `I want to add weather forecast data. How should I implement this feature?`
    - `Walk me through adding weather alerts to this application`
-   - `How would I add weather history without breaking existing functionality?`
+   - `How would I add historical weather data without breaking existing functionality?`
 
 2. **Implementation Guidance**
    - Ask: `Show me step-by-step how to add humidity data to weather information`
@@ -276,8 +276,8 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 1. **Common Issues**
    - Open Copilot Chat in Ask mode
-   - Ask: `What could cause the weather API call to fail silently?`
-   - Request: `How should I debug HTTP connection issues?`
+   - Ask: `What could cause the weather API request to fail silently?`
+   - Request: `How should I debug HTTP connection issues from the OpenWeatherMap API?`
 
 2. **Error Handling Improvements**
    - Ask: `How can I improve exception handling throughout this application?`
@@ -308,7 +308,7 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 1. **Performance Expert Role**
    - Open Copilot Chat
    - `As a performance expert, analyze the efficiency of WeatherService.java`
-   - `How can I optimize the HTTP requests and JSON parsing?`
+   - `How can I optimize the HTTP requests and JSON parsing in the API client?`
 
 2. **Code Quality Reviewer**
    - `Act as a senior Java developer and review the code quality in the com.weather.app package`
@@ -324,8 +324,8 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 1. **Minimal vs. Maximum Context**
    - Ask the same question with different context levels:
-     - Minimal: `How do I add validation?`
-     - Medium: `How do I add validation to #file?`
+     - Minimal: `How do I add input validation?`
+     - Medium: `How do I add input validation to #file?`
      - Maximum: `@workspace #codebase How do I add consistent input validation across all classes following the existing patterns?`
    - Compare response quality and relevance
 
@@ -439,24 +439,24 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 1. **Refactoring Scenarios**
    - Open Copilot Chat
-   - `How would you refactor the WeatherService to use dependency injection with interfaces?`
-   - `Show me how to implement the Strategy pattern for different weather data sources`
+   - `How would you refactor the WeatherService to use dependency injection with interfaces in Spring framework?`
+   - `Show me how to implement the Strategy pattern for different weather data providers via APIs`
 
 2. **Design Pattern Implementation**
    - `How could I implement the Observer pattern for weather data updates?`
-   - `Show me how to add a Factory pattern for creating different weather client implementations.`
+   - `Show me how to add a Factory pattern for creating different weather client implementation.`
 
 **Learning Goal:** Explore advanced programming concepts with Copilot's guidance.
 
 ### Exercise 9.2: Alternative Implementations
 
 1. **Different Approaches**
-   - `Show me 3 different ways to implement weather data caching.`
+   - `Show me 3 different ways to implement weather data caching in Java.`
    - `What are alternative approaches to HTTP client implementation in Java?`
 
 2. **Technology Comparisons**
-   - `How would this application look if built with Spring Boot framework?`
-   - `Compare this implementation with a microservices architecture approach.`
+   - `How would this weather application look if built with Spring Boot framework?`
+   - `Compare this implementation with a microservices arhitecture approach.`
 
 **Learning Goal:** Understand different implementation strategies and trade-offs.
 
@@ -493,6 +493,3 @@ Welcome to your comprehensive GitHub Copilot training journey! These exercises a
 
 **Learning Goal:** Master collaborative development using multiple chat threads with distinct roles, simulating real-world team dynamics and leveraging specialized agents for comprehensive project management.
 
----
-
-Happy coding with GitHub Copilot!
